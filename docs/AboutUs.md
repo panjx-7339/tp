@@ -56,4 +56,4 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](http://github.com/onetw0three)]
 
 * Role: Integration, Code Quality
-* Responsibilities:  In charge of versioning of the code, maintaining the code repository, integrating various parts of the software to create a whole. Looks after code quality, ensures adherence to coding standards,
+* Responsibilities: In charge of versioning of the code, maintaining the code repository, integrating various parts of the software to create a whole. Looks after code quality, ensures adherence to coding standards,
