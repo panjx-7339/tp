@@ -51,7 +51,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Tan Ze Jian
 
-<img src="images/zejian.png" width="200px">
+<img src="images/onetw0three.png" width="200px">
 
 [[homepage](https://onetw0three.github.io/)]
 [[github](http://github.com/onetw0three)]
