@@ -27,8 +27,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 [[github](https://github.com/oolimry/)]
 
-* Role: Slacker
-* Responsibilities: Keep Jinxia in Check
+* Role: Infrastructure Expert
+* Responsibilities: Plan the overall infrastructure for the project needs.
 
 ### Pan Jinxia
 
