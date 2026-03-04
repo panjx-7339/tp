@@ -293,14 +293,33 @@ Phone-call based scam caller who
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+| Priority | As a …​                        | I want to …​                                                                                 | So that I can…​                                                                  |
+|----------|--------------------------------|----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| `* * *`  | scam caller                    | create potential victim profile with attached information                                    | I know who to scam next                                                          |
+| `* * *`  | scam caller                    | delete potential victim profile                                                              | I know who not to scam next or who I have scammed                                |
+| `* * *`  | scam caller                    | list potential victim profiles                                                               | I can see all potential victims                                                  |
+| `* * *`  | scam caller                    | quickly append new information about someone I'm calling                                     | I can use that information in the future against that person                     |
+| `* * *`  | scam caller                    | quickly search up personal information about someone I'm calling                             | I can use that information to gain their credibility                             |
+| `* * *`  | sometimes-offline scam caller  | access the address book offline                                                              | I can work reliably on the go                                                    |
+| `* * *`  | organised scam caller          | filter and sort contacts by attributes                                                       | I can focus on the best next calls                                               |
+| `* * *`  | expert user                    | specify optional parameters with command flags                                               | I have more flexibility when using commands                                      |
+| `* *`    | new user                       | view a help menu                                                                             | I understand what I can do with the product                                      |
+| `* *`    | scam caller                    | mark a victim is attempted to call but not tricked                                           | I can avoid calling that person again                                            |
+| `* *`    | successful scam caller         | create custom fields                                                                         | personalise relevant details for each victim for greater success                 |
+| `* *`    | scam caller                    | edit potential victim profile                                                                | I can update victim profile as more information gets known                       |
+| `* *`    | beginner user                  | get help on the commands                                                                     | I can familiarise myself with the various tools at my disposal                   |
+| `* *`    | scam caller                    | filter by high risk demographics such as old age & high reward demographics like high income | prioritize who I should call                                                     |
+| `* *`    | scam caller                    | draw and label a relationship from one person to another person                              | when I scam someone, I can use personal information about another person as bait |
+| `* *`    | successful scam caller         | import and manage a large contact list                                                       | I can work with a larger number of victims                                       |
+| `* *`    | busy scam caller               | see and quickly type auto-filled commands                                                    | I can avoid typing repetitive commands and quickly add new victims               |
+| `* *`    | beginner scam caller           | load and interact with sample data                                                           | I have the freedom to try commands without having access to a large victim base  |
+| `* *`    | scam caller                    | set reminders to follow up calls on victims                                                  | I can review which targets need to be called again                               |
+| `* *`    | scam caller                    | view a detailed dashboard of a specific victim                                               | refer to that victim's information during a scam call                            |
+| `* *`    | high-volume scam caller        | obtain search results quickly even with large numbers of contacts                            | I am not slowed down during operations                                           |
+| `* *`    | security-conscious scam caller | have encrypted local storage and auto-lock                                                   | sensitive data is protected and secure                                           |
+| `* *`    | security-conscious scam caller | require logging in for the app                                                               | sensitive data is protected and secure                                           |
+| `*`      | scam caller                    | purge data immediately                                                                       | I can wipe my hard disk if I get raided by the police                            |
+| `*`      | new user                       | follow a tutorial                                                                            | I am guided through the onboarding process                                       |
 
 *{More to be added}*
 
