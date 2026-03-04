@@ -33,7 +33,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Pan Jinxia
 
-<img src="images/pan-jinxia.png" width="200px">
+<img src="images/panjx-7339.png" width="200px">
 
 [[github](https://github.com/panjx-7339/)]
 
