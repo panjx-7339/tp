@@ -37,7 +37,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](https://github.com/panjx-7339/)]
 
 * Role: Developer
-* Responsibilities: Data
+* Responsibilities: Intellij expert, UI Component
 
 ### Song Yiyang
 
