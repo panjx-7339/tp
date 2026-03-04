@@ -11,15 +11,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Donald Kong
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/don-ko.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](https://github.com/don-ko/)]
 
-* Role: Project Advisor
+* Role: Testing
+* Responsibilities: Ensure that the code is tested and that the tests are passing, and that the test code coverage is
+  high.
 
 ### Lim Rui Yuan
 
