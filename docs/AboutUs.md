@@ -21,15 +21,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Project Advisor
 
-### Jane Doe
+### Lim Rui Yuan
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/ooliimry.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/oolimry)]
+[[homepage](https://store.steampowered.com/app/3410660/]
 
-* Role: Team Lead
-* Responsibilities: UI
+* Role: Slacker
+* Responsibilities: Keep Donald in Check
 
 ### Pan Jinxia
 
