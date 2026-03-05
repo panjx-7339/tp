@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# Scambook Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -274,71 +274,179 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
+Phone-call based scam caller who
+* is based in Singapore
+* executes financial scams
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**:
+* Manages large volumes of scam caller victims' contact information in Singapore
+* Possible identification, and visualisation of victim social networks
+* Filter/sort for high-risk / low-reward victims
+* Reminders to follow-up on certain higher potential victims
+* Single-user application for security and anonymity
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
-
-*{More to be added}*
+| Priority | As a …​                        | I want to …​                                                                                 | So that I can…​                                                                  |
+|----------|--------------------------------|----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| `* * *`  | scam caller                    | create potential victim profile with attached information                                    | I know who to scam next                                                          |
+| `* * *`  | scam caller                    | delete potential victim profile                                                              | I know who not to scam next or who I have scammed                                |
+| `* * *`  | scam caller                    | list potential victim profiles                                                               | I can see all potential victims                                                  |
+| `* * *`  | scam caller                    | quickly append new information about someone I'm calling                                     | I can use that information in the future against that person                     |
+| `* * *`  | scam caller                    | quickly search up personal information about someone I'm calling                             | I can use that information to gain their credibility                             |
+| `* * *`  | sometimes-offline scam caller  | access the address book offline                                                              | I can work reliably on the go                                                    |
+| `* * *`  | organised scam caller          | filter and sort contacts by attributes                                                       | I can focus on the best next calls                                               |
+| `* * *`  | expert user                    | specify optional parameters with command flags                                               | I have more flexibility when using commands                                      |
+| `* *`    | new user                       | view a help menu                                                                             | I understand what I can do with the product                                      |
+| `* *`    | scam caller                    | mark a victim is attempted to call but not tricked                                           | I can avoid calling that person again                                            |
+| `* *`    | successful scam caller         | create custom fields                                                                         | personalise relevant details for each victim for greater success                 |
+| `* *`    | scam caller                    | edit potential victim profile                                                                | I can update victim profile as more information gets known                       |
+| `* *`    | beginner user                  | get help on the commands                                                                     | I can familiarise myself with the various tools at my disposal                   |
+| `* *`    | scam caller                    | filter by high risk demographics such as old age & high reward demographics like high income | prioritize who I should call                                                     |
+| `* *`    | scam caller                    | draw and label a relationship from one person to another person                              | when I scam someone, I can use personal information about another person as bait |
+| `* *`    | successful scam caller         | import and manage a large contact list                                                       | I can work with a larger number of victims                                       |
+| `* *`    | busy scam caller               | see and quickly type auto-filled commands                                                    | I can avoid typing repetitive commands and quickly add new victims               |
+| `* *`    | beginner scam caller           | load and interact with sample data                                                           | I have the freedom to try commands without having access to a large victim base  |
+| `* *`    | scam caller                    | set reminders to follow up calls on victims                                                  | I can review which targets need to be called again                               |
+| `* *`    | scam caller                    | view a detailed dashboard of a specific victim                                               | refer to that victim's information during a scam call                            |
+| `* *`    | high-volume scam caller        | obtain search results quickly even with large numbers of contacts                            | I am not slowed down during operations                                           |
+| `* *`    | security-conscious scam caller | have encrypted local storage and auto-lock                                                   | sensitive data is protected and secure                                           |
+| `* *`    | security-conscious scam caller | require logging in for the app                                                               | sensitive data is protected and secure                                           |
+| `*`      | scam caller                    | purge data immediately                                                                       | I can wipe my hard disk if I get raided by the police                            |
+| `*`      | new user                       | follow a tutorial                                                                            | I am guided through the onboarding process                                       |
 
 ### Use cases
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: UC01 - Create potential victim profile**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User requests to create a new potential victim profile with name and other attributes.
+2. System validates the attributes.
+3. System saves the new profile and displays a success message with the created profile summary.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 1a. Victim name is unspecified.
+    * 1a1. System shows an error message indicating the missing attribute.
 
-  Use case ends.
+      Use case ends.
 
-* 3a. The given index is invalid.
+* 2a. Phone number or email format is invalid.
+    * 2a1. System shows an error message with the expected format.
 
-    * 3a1. AddressBook shows an error message.
+      Use case ends.
 
-      Use case resumes at step 2.
 
-*{More to be added}*
+**Use case: UC02 - Delete potential victim profile**
+
+**MSS**
+
+1. User requests to delete a potential victim profile.
+2. System deletes the specified profile and displays a success message with the deleted profile's name.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. Request format is invalid or victim profile is unspecified
+    * 1a1. System shows an error indicating the expected command format.
+
+      Use case ends.
+
+
+**Use case: UC03 - Search up victim profile**
+
+**MSS**
+
+1. User requests to search for victim profiles by name or other attributes.
+2. System searches stored profiles for matches.
+3. System displays a list of all matching profiles with their stored details.
+ 
+    Use case ends.
+
+**Extensions**
+
+* 1a. Request format is invalid
+    * 1a1. System shows an error indicating the expected command format.
+
+      Use case ends.
+
+* 2a. No profiles match the query.
+    * 2a1. System shows a message indicating no results found.
+
+      Use case ends.
+
+
+**Use case: UC04 - Sort contacts by attributes**
+
+**MSS**
+
+1. User requests to sort profiles by specified tag(s).
+2. System validates the specified tag(s).
+3. System displays the sorted list of profiles.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. No profile has the specified tag, or the tag name is invalid.
+    * 2a1. System shows an error listing example valid tags.
+
+      Use case ends.
+
+    
+**Use case: UC05 - Append New Information to a Victim Profile**
+
+**MSS**
+
+1. User requests to append information to a specified profile.
+2. System validates the new information.
+3. System updates the profile with the new information and displays a success message with the updated profile.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. No new information is provided or profile is not well specified.
+    * 1a1. System shows an error indicating the expected command format.
+
+      Use case ends.
+ 
+* 3a. The new information is invalid.
+    * 3a1. System shows an error indicating the expected format.
+
+      Use case ends.
+
+* 4a. The new information conflicts with existing information (e.g., trying to append a tag that already exists).
+    * 4a1. System shows an error indicating the conflict.
+
+      Use case ends.
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-*{More to be added}*
+1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
+2. Should be able to hold up to 1000 victims without a noticeable sluggishness in performance for typical usage.
+3. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be
+   able to accomplish most of the tasks faster using commands than using the mouse.
+4. Should be fully functional without an internet connection.
+5. Should accept only ASCII characters in user input, and display all stored information in ASCII characters.
 
 ### Glossary
 
+* **Victim Profile**: A contact entry representing a potential scam target, containing name, phone, email and custom tags
+* **Tag**: A key-value pair of information attached to a victim profile, e.g., `job : investment banker`, `yearly income : $100000`
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
 
 --------------------------------------------------------------------------------------------------------------------
 
