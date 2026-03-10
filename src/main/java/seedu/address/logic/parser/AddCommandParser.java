@@ -8,7 +8,12 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.parser.inputpatterns.*;
+import seedu.address.logic.parser.inputpatterns.EmailParam;
+import seedu.address.logic.parser.inputpatterns.InputPattern;
+import seedu.address.logic.parser.inputpatterns.Param;
+import seedu.address.logic.parser.inputpatterns.PhoneParam;
+import seedu.address.logic.parser.inputpatterns.StringToken;
+import seedu.address.logic.parser.inputpatterns.Token;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
