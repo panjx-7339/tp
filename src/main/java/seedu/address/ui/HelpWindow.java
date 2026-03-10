@@ -19,16 +19,16 @@ public class HelpWindow extends UiPart<Stage> {
     public static final String USERGUIDE_URL = "https://ay2526s2-cs2103t-t16-1.github.io/tp/UserGuide.html";
     public static final String HELP_MESSAGE = "Refer to the user guide: " + USERGUIDE_URL;
     public static final String HELP_TEXT = """
-            AB3 - AddressBook Level 3
+            ScamBook
 
             Usage: <COMMAND> <PARAMETERS>
 
             Commands:
-              add     n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]...
-                        e.g. add n/John Doe p/98765432 e/johnd@example.com a/123 Street
+              add     NAME [-phone PHONE] [-email EMAIL] [-tag TAG:VALUE]...
+                        e.g. add -name John Doe -phone 98765432 -email johnd@example.com
               list    List all contacts
-              edit    INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...
-                        e.g. edit 1 p/91234567 e/newemail@example.com
+              edit    INDEX [-name NAME] [-phone PHONE] [-email EMAIL] [-tag TAG:VALUE]...
+                        e.g. edit 1 -phone 91234567 -email newemail@example.com
               find    KEYWORD [MORE_KEYWORDS]
                         e.g. find Alex David
               delete  INDEX
