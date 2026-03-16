@@ -19,28 +19,29 @@ public class HelpWindow extends UiPart<Stage> {
     public static final String USERGUIDE_URL = "https://ay2526s2-cs2103t-t16-1.github.io/tp/UserGuide.html";
     public static final String HELP_MESSAGE = "Refer to the user guide: " + USERGUIDE_URL;
     public static final String HELP_TEXT = """
-            ScamBook
+        ScamBook
 
-            Usage: <COMMAND> <PARAMETERS>
+        Usage: <COMMAND> <PARAMETERS>
 
-            Commands:
-              add     NAME [-phone PHONE] [-email EMAIL] [-tag TAG:VALUE]...
-                        e.g. add -name John Doe -phone 98765432 -email johnd@example.com
-              list    List all contacts
-              edit    INDEX [-name NAME] [-phone PHONE] [-email EMAIL]...
-                        e.g. edit 1 -phone 91234567 -email newemail@example.com
-              find    KEYWORD [MORE_KEYWORDS]
-                        e.g. find Alex David
-              delete  INDEX
-              clear   Delete all contacts
-              help    Show this help message
-              exit    Exit the application
+        Commands:
+          add     NAME [--phone PHONE] [--email EMAIL]
+                    e.g. add John Doe --phone 98765432 --email johnd@example.com
+          tag     INDEX [--add <tag-name>:<tag-value>]... [--edit <tag-name>:<tag-value>]... [--delete <tag-name>]...
+          list    List all contacts
+          edit    INDEX [-name NAME] [-phone PHONE] [-email EMAIL]...
+                    e.g. edit 1 -phone 91234567 -email newemail@example.com
+          find    KEYWORD [MORE_KEYWORDS]
+                    e.g. find Alex David
+          delete  INDEX
+          clear   Delete all contacts
+          help    Show this help message
+          exit    Exit the application
 
-            Notes:
-              Parameters in UPPER_CASE are user-supplied values.
-              Parameters in [brackets] are optional.
-              Parameters with ... can be repeated multiple times.
-            """;
+        Notes:
+          Parameters in UPPER_CASE are user-supplied values.
+          Parameters in [brackets] are optional.
+          Parameters with ... can be repeated multiple times.
+        """;
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
