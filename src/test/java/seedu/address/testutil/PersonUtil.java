@@ -20,6 +20,15 @@ public class PersonUtil {
      */
     public static String getAddCommand(Person person) {
         String commandString = AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
+
+        if (person.hasEmail()) {
+            commandString += " -email " + person.getEmail().toString();
+        }
+
+        if (person.hasPhone()) {
+            commandString += " -phone " + person.getPhone().toString();
+        }
+
         return commandString;
     }
 

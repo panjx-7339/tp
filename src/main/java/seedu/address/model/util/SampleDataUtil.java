@@ -19,17 +19,17 @@ public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                getTagSet("friends")),
+                    getTagSet("job:investment banker")),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
-                getTagSet("colleagues", "friends")),
+                    getTagSet("job:manager", "income:$200,000")),
             new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
-                getTagSet("neighbours")),
+                    getTagSet("job:manager")),
             new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
-                getTagSet("family")),
+                    getTagSet("job:engineer")),
             new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
-                getTagSet("classmates")),
+                    getTagSet("status:scammed")),
             new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
-                getTagSet("colleagues"))
+                    getTagSet())
         };
     }
 
@@ -43,10 +43,15 @@ public class SampleDataUtil {
 
     /**
      * Returns a tag set containing the list of strings given.
+     * Each string must be in the format "tagname:tagvalue".
      */
     public static Set<Tag> getTagSet(String... strings) {
         return Arrays.stream(strings)
-                .map(Tag::new)
+                .map(s -> {
+                    String[] parts = s.split(":", 2);
+                    assert parts.length == 2 : Tag.FORMAT_MESSAGE_CONSTRAINTS;
+                    return new Tag(parts[0].trim().toLowerCase(), parts[1].trim());
+                })
                 .collect(Collectors.toSet());
     }
 

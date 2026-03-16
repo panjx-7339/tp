@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.Comparator;
+import java.util.List;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -8,6 +9,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -62,8 +64,16 @@ public class PersonCard extends UiPart<Region> {
             email.setVisible(false);
         }
 
-        person.getTags().stream()
+        List<Tag> tagList = person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+                .toList();
+
+        if (!tagList.isEmpty()) {
+            tags.setVisible(true);
+            tagList.forEach(tag -> {
+                Label tagLabel = new Label(tag.toString());
+                tags.getChildren().add(tagLabel);
+            });
+        }
     }
 }

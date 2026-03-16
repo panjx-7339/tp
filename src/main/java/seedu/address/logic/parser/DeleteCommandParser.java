@@ -2,11 +2,17 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.inputpatterns.InputPattern;
 import seedu.address.logic.parser.inputpatterns.IntegerToken;
+import seedu.address.logic.parser.inputpatterns.Token;
+
+
 
 /**
  * Parses input arguments and creates a new DeleteCommand object
@@ -15,12 +21,11 @@ public class DeleteCommandParser extends Parser<DeleteCommand> {
 
     @Override
     InputPattern createInputPattern() {
-        return new InputPattern("delete",
-
-                // TODO find a way to retrieve the size of the list
+        ArrayList<Token> tokens = new ArrayList<Token>(List.of(
                 new IntegerToken("taskno" , 1, 100)
+        ));
 
-        );
+        return new InputPattern("delete", tokens);
     }
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteCommand

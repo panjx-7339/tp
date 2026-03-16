@@ -7,12 +7,18 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.inputpatterns.InputPattern;
 import seedu.address.logic.parser.inputpatterns.IntegerToken;
+import seedu.address.logic.parser.inputpatterns.Token;
+
+
 
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -21,12 +27,11 @@ public class EditCommandParser extends Parser<EditCommand> {
 
     @Override
     InputPattern createInputPattern() {
-        return new InputPattern("edit",
-
-                // TODO find a way to retrieve the size of the list
+        ArrayList<Token> tokens = new ArrayList<Token>(List.of(
                 new IntegerToken("taskno" , 1, 100)
+        ));
 
-        );
+        return new InputPattern("edit", tokens);
     }
 
     /**

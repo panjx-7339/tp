@@ -10,28 +10,52 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * A series of tokens that represent a valid command structure
  */
-public class InputPattern extends ArrayList<Token> {
+public class InputPattern {
+
+    /**
+     * The list of tokens that form the first part of the input arguments
+     */
+    private ArrayList<Token> tokens;
+
+    /**
+     * The list of parameters that can come after all the tokens
+     */
+    private ArrayList<Param> params;
+
     /**
      * The label of this input pattern,
      * typically refers to the command this input pattern handles
      */
-    final String label;
+    private final String label;
 
     /**
      * @param label the label of the InputPattern
      * @param tokens a List of tokens that make up this InputPattern
+     * @param params a List of params that can be specified at the end of this InputPattern
      */
-    public InputPattern(String label, Token... tokens) {
-        addAll(List.of(tokens));
+    public InputPattern(String label, ArrayList<Token> tokens, ArrayList<Param> params) {
+        this.tokens = tokens;
         this.label = label;
+        this.params = params;
     }
+
+    /**
+     * Constructor for no parameters
+     *
+     * @param label the label of the InputPattern
+     * @param tokens a List of tokens that make up this InputPattern
+     */
+    public InputPattern(String label, ArrayList<Token> tokens) {
+        this(label, tokens, new ArrayList<Param>());
+    }
+
 
     /**
      * @param id the id of the token to find
      * @return the token with corresponding id within the InputPattern
      */
     public Token getTokenWithId(String id) {
-        for (Token token : this) {
+        for (Token token : this.tokens) {
             if (token.getId().equals(id)) {
                 return token;
             }
@@ -40,32 +64,104 @@ public class InputPattern extends ArrayList<Token> {
     }
 
     /**
+     * @param id the id of the param to find
+     * @return the param with the corresponding id within the InputPattern
+     */
+    public Param getParamWithId(String id) {
+        for (Param param : this.params) {
+            if (param.getId().equals(id)) {
+                return param;
+            }
+        }
+        return null;
+    }
+
+    /**
      * @param args the entire string after the first command word
      *             This function will attempt to break args into segments and assign them
-     *             to the corresponding token
+     *             to the corresponding token & param
      *             if successful, each token have their assignedSegment set
+     *             and each param have their list of values set
      *             if unsuccessful, it will throw a ParseException
      *
      * @throws ParseException
      */
     public void assignSegmentsFromArgs(String args) throws ParseException {
-        ArrayList<String> combinedSegments = getCombinedSegments(args);
+        int tokenParamSplitPoint = args.length();
 
-        if (combinedSegments.size() < this.size()) {
+        for (Param param : params) {
+            int thisSplitPoint = args.indexOf(param.getId());
+
+            // cannot find that param
+            if (thisSplitPoint == -1) {
+                continue;
+            }
+
+            // choose the earliest occurence of any param to split
+            tokenParamSplitPoint = Math.min(thisSplitPoint, tokenParamSplitPoint);
+        }
+
+        String tokenArgs = args.substring(0, tokenParamSplitPoint).strip();
+        String paramArgs = args.substring(tokenParamSplitPoint).strip();
+
+        /// Settle the tokenArgs
+
+        ArrayList<String> combinedSegments = getCombinedSegments(tokenArgs);
+
+        if (combinedSegments.size() < this.tokens.size()) {
             throw new ParseException("Too few fields inputted (TODO MORE DESCRIPTIVE)");
-        } else if (combinedSegments.size() > this.size()) {
+        } else if (combinedSegments.size() > this.tokens.size()) {
             throw new ParseException("Too many fields inputted (TODO MORE DESCRIPTIVE)");
         }
 
         for (int i = 0; i < combinedSegments.size(); i++) {
             String segment = combinedSegments.get(i);
-            Token token = this.get(i);
+            Token token = this.tokens.get(i);
 
             if (!token.matches(segment)) {
                 throw new ParseException(segment + " does not match " + token.getPreview());
             }
 
             token.setAssignedSegment(segment);
+        }
+
+        /// settle the paramsArgs
+        String[] paramSegments = paramArgs.split(" -");
+        for (int i = 0; i < paramSegments.length; i++) {
+            String segment = paramSegments[i];
+            if (segment.isEmpty()) {
+                continue;
+            }
+
+            // since splitting by " -" removes the -, we add it back
+            if (i != 0) {
+                segment = "-" + segment;
+            }
+            segment = segment.strip();
+
+            boolean hasMatchingSegment = false;
+            for (Param param : params) {
+                if (!param.idMatches(segment)) {
+                    continue;
+                }
+
+                if (!param.matches(segment)) {
+                    throw new ParseException(param.getValueFromSegment(segment)
+                            + " is not a valid value for the param " + param.getId());
+                }
+
+                param.addValueFromSegment(segment);
+                hasMatchingSegment = true;
+                break;
+            }
+
+            if (!hasMatchingSegment) {
+                throw new ParseException("unknown parameter: " + segment);
+            }
+        }
+
+        for (Param param : params) {
+            param.checkIfAppropriateNumberOfValues();
         }
     }
 
@@ -86,19 +182,19 @@ public class InputPattern extends ArrayList<Token> {
         ArrayList<String> combinedSegments = new ArrayList<>();
 
         int segmentPointer = 0;
-        for (int i = 0; i < this.size(); i++) {
+        for (int i = 0; i < this.tokens.size(); i++) {
             if (segmentPointer == rawSegments.size()) {
                 break;
             }
 
-            Token token = this.get(i);
+            Token token = this.tokens.get(i);
             if (token.allowSpaces()) {
                 ArrayList<String> segmentsToJoin = new ArrayList<>();
 
-                if (i != this.size() - 1) {
+                if (i != this.tokens.size() - 1) {
                     // case 1: there is a next token
                     // find the position and add everything in between
-                    Token nextToken = this.get(i + 1);
+                    Token nextToken = this.tokens.get(i + 1);
 
                     while (segmentPointer < rawSegments.size()) {
                         String nextSegment = rawSegments.get(segmentPointer);
