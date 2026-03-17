@@ -1,11 +1,9 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PARAM_ID_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PARAM_ID_NAME;
+import static seedu.address.logic.parser.CliSyntax.PARAM_ID_PHONE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +12,12 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.inputpatterns.EmailParam;
 import seedu.address.logic.parser.inputpatterns.InputPattern;
 import seedu.address.logic.parser.inputpatterns.IntegerToken;
+import seedu.address.logic.parser.inputpatterns.NameParam;
+import seedu.address.logic.parser.inputpatterns.Param;
+import seedu.address.logic.parser.inputpatterns.PhoneParam;
 import seedu.address.logic.parser.inputpatterns.Token;
 
 
@@ -28,10 +30,16 @@ public class EditCommandParser extends Parser<EditCommand> {
     @Override
     InputPattern createInputPattern() {
         ArrayList<Token> tokens = new ArrayList<Token>(List.of(
-                new IntegerToken("taskno" , 1, 100)
+            new IntegerToken("index", 1, Integer.MAX_VALUE)
         ));
 
-        return new InputPattern("edit", tokens);
+        ArrayList<Param> params = new ArrayList<>(List.of(
+            new NameParam(0, 1),
+            new PhoneParam(0, 1),
+            new EmailParam(0, 1)
+        ));
+
+        return new InputPattern("edit", tokens, params);
     }
 
     /**
@@ -41,32 +49,30 @@ public class EditCommandParser extends Parser<EditCommand> {
      */
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
+        InputPattern inputPattern = createInputPattern();
+        inputPattern.assignSegmentsFromArgs(args.strip());
 
-        Index index;
-
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
-        }
-
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
+        Token indexToken = inputPattern.getTokenWithId("index");
+        Index index = ParserUtil.parseIndex(indexToken.getAssignedSegment());
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
-        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editPersonDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
+        Param nameParam = inputPattern.getParamWithId(PARAM_ID_NAME);
+        ArrayList<String> nameValues = nameParam.getValues();
+        if (!nameValues.isEmpty()) {
+            editPersonDescriptor.setName(ParserUtil.parseName(nameValues.get(0)));
         }
-        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            editPersonDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
+
+        Param phoneParam = inputPattern.getParamWithId(PARAM_ID_PHONE);
+        ArrayList<String> phoneValues = phoneParam.getValues();
+        if (!phoneValues.isEmpty()) {
+            editPersonDescriptor.setPhone(ParserUtil.parsePhone(phoneValues.get(0)));
         }
-        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-            editPersonDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
-        }
-        if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-            editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
+
+        Param emailParam = inputPattern.getParamWithId(PARAM_ID_EMAIL);
+        ArrayList<String> emailValues = emailParam.getValues();
+        if (!emailValues.isEmpty()) {
+            editPersonDescriptor.setEmail(ParserUtil.parseEmail(emailValues.get(0)));
         }
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {

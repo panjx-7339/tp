@@ -12,6 +12,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalPersons.SILENT;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
@@ -68,6 +69,25 @@ public class EditCommandTest {
         expectedModel.setPerson(lastPerson, editedPerson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_editNameOnPersonWithMissingOptionalFields_success() {
+        AddressBook addressBook = new AddressBook();
+        addressBook.addPerson(SILENT);
+        Model localModel = new ModelManager(addressBook, new UserPrefs());
+
+        String newName = "SILENT UPDATED";
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(newName).build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        Person editedPerson = new PersonBuilder(SILENT).withName(newName).build();
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(localModel.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(SILENT, editedPerson);
+
+        assertCommandSuccess(editCommand, localModel, expectedMessage, expectedModel);
     }
 
     @Test
