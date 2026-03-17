@@ -34,7 +34,7 @@ public class TagCommandParser extends Parser<TagCommand> {
     @Override
     InputPattern createInputPattern() {
         ArrayList<Token> tokens = new ArrayList<Token>(List.of(
-                new IntegerToken("profile_number" , 1, 100)
+                new IntegerToken("index" , 1, 100)
         ));
 
         ArrayList<Param> params = new ArrayList<>(List.of(
@@ -57,7 +57,7 @@ public class TagCommandParser extends Parser<TagCommand> {
         inputPattern.assignSegmentsFromArgs(args.strip());
 
 
-        Token indexToken = inputPattern.getTokenWithId("profile_number");
+        Token indexToken = inputPattern.getTokenWithId("index");
         Index index = ParserUtil.parseIndex(indexToken.getAssignedSegment());
 
 

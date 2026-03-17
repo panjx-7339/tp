@@ -12,7 +12,7 @@ public class JsonAdaptedTagTest {
     private static final Tag tag = new Tag("job:engineer");
 
     @Test
-    public void correct_tagString_from_Tag() {
+    public void correctTagString() {
         JsonAdaptedTag adaptedTag = new JsonAdaptedTag(tag);
         assertEquals("job:engineer", adaptedTag.getTag());
     }
