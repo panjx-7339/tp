@@ -42,7 +42,7 @@ class JsonAdaptedTag {
         try {
             return new Tag(this.tagString);
         } catch (NullPointerException e) {
-            throw new IllegalValueException("Null pointer exception. This should not happen.");
+            throw new IllegalValueException("Null pointer exception. tagString is null.");
         } catch (IllegalArgumentException e) {
             throw new IllegalValueException(e.getMessage());
         }

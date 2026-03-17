@@ -23,7 +23,7 @@ public class Person {
     private final TagList tags;
 
     /**
-     * Every field must be present and not null.
+     * Name and tag list must be present and not null (tag list can be empty).
      */
     public Person(Name name, Phone phone, Email email, TagList tags) {
         requireAllNonNull(name, tags);

@@ -38,7 +38,7 @@ public class SampleDataUtil {
     }
 
     /**
-     * Returns a tag set containing the list of strings given.
+     * Returns a tag list containing the list of strings given.
      * Each string must be in the format "tagname:tagvalue".
      */
     public static TagList getTagList(String... strings) {
