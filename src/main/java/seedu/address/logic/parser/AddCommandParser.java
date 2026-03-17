@@ -1,8 +1,5 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.parser.CliSyntax.PARAM_ID_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PARAM_ID_PHONE;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -14,13 +11,16 @@ import seedu.address.logic.parser.inputpatterns.InputPattern;
 import seedu.address.logic.parser.inputpatterns.Param;
 import seedu.address.logic.parser.inputpatterns.PhoneParam;
 import seedu.address.logic.parser.inputpatterns.StringToken;
+import seedu.address.logic.parser.inputpatterns.TagParam;
 import seedu.address.logic.parser.inputpatterns.Token;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.TagList;
+import seedu.address.model.tag.Tag;
 
+import static seedu.address.logic.parser.CliSyntax.*;
 
 
 /**
@@ -37,7 +37,8 @@ public class AddCommandParser extends Parser<AddCommand> {
 
         ArrayList<Param> params = new ArrayList<>(List.of(
                 new PhoneParam(0, 1),
-                new EmailParam(0, 1)
+                new EmailParam(0, 1),
+                new TagParam(0, 100)
         ));
 
         return new InputPattern("add", tokens, params);
@@ -70,8 +71,11 @@ public class AddCommandParser extends Parser<AddCommand> {
             email = new Email(emailValues.get(0));
         }
 
+        Param tagAddParam = inputPattern.getParamWithId(PARAM_ID_TAG);
+        ArrayList<String> tagStrings = tagAddParam.getValues();
+        List<Tag> tags = tagStrings.stream().map(Tag::new).toList();
 
-        TagList tagList = new TagList();
+        TagList tagList = new TagList(tags);
 
         Person person = new Person(name, phone, email, tagList);
 
