@@ -11,11 +11,13 @@ import static seedu.address.testutil.TypicalPersons.BENSON;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Comparator;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.Person;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -91,6 +93,40 @@ public class ModelManagerTest {
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredPersonList().remove(0));
+    }
+
+    @Test
+    public void isFilteredViewActive_defaultAndUpdatedState() {
+        assertFalse(modelManager.isFilteredViewActive());
+
+        modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList("Alice")));
+        assertTrue(modelManager.isFilteredViewActive());
+
+        modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        assertFalse(modelManager.isFilteredViewActive());
+    }
+
+    @Test
+    public void updateSortedPersonList_nullComparator_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.updateSortedPersonList(null));
+    }
+
+    @Test
+    public void sortMasterPersonList_nullComparator_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.sortMasterPersonList(null));
+    }
+
+    @Test
+    public void sortMasterPersonList_reordersAddressBookList() {
+        modelManager = new ModelManager(new AddressBookBuilder().withPerson(BENSON).withPerson(ALICE).build(),
+                new UserPrefs());
+
+        modelManager.sortMasterPersonList(Comparator.comparing(
+                person -> person.getName().fullName,
+                String.CASE_INSENSITIVE_ORDER));
+
+        assertEquals(ALICE, modelManager.getAddressBook().getPersonList().get(0));
+        assertEquals(BENSON, modelManager.getAddressBook().getPersonList().get(1));
     }
 
     @Test
