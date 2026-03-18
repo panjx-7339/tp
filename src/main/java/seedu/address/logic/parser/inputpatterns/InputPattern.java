@@ -97,7 +97,7 @@ public class InputPattern {
                 continue;
             }
 
-            // choose the earliest occurence of any param to split
+            // choose the earliest occurrence of any param to split
             tokenParamSplitPoint = Math.min(thisSplitPoint, tokenParamSplitPoint);
         }
 
@@ -173,9 +173,16 @@ public class InputPattern {
      * @return the list of segments that matches the token pattern
      */
     private ArrayList<String> getCombinedSegments(String input) {
+        String strippedInput = input.strip();
+
+        if (strippedInput.isEmpty()) {
+            // empty ArrayList
+            return new ArrayList<>();
+        }
+
         ArrayList<String> rawSegments = new ArrayList<String>();
-        rawSegments.addAll(List.of(input.split(" ")));
-        if (!input.isEmpty() && input.charAt(input.length() - 1) == ' ') {
+        rawSegments.addAll(List.of(strippedInput.split(" ")));
+        if (!strippedInput.isEmpty() && strippedInput.charAt(strippedInput.length() - 1) == ' ') {
             rawSegments.add("");
         }
 
