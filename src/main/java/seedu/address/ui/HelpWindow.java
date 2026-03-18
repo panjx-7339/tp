@@ -24,14 +24,19 @@ public class HelpWindow extends UiPart<Stage> {
         Usage: <COMMAND> <PARAMETERS>
 
         Commands:
-          add     NAME [--phone PHONE] [--email EMAIL]
-                    e.g. add John Doe --phone 98765432 --email johnd@example.com
-          tag     INDEX [--add <tag-name>:<tag-value>]... [--edit <tag-name>:<tag-value>]... [--delete <tag-name>]...
+          add     NAME [--phone PHONE] [--email EMAIL] [--tag NAME:VALUE]...
+                    e.g. add John Doe --phone 98765432 --email johnd@example.com --tag school:NUS
+          tag     INDEX [--add NAME:VALUE]... [--edit NAME:VALUE]... [--delete TAGNAME]...
+                    e.g. tag 1 --add school:NUS --edit salary:10000 --delete age
+          edit    INDEX [--name NAME] [--phone PHONE] [--email EMAIL]...
+                    e.g. edit 1 --name Jane Doe --phone 91234567 --email newemail@example.com
+          filter  filter [--name NAME]... [--phone PHONE]...
+                    e.g. filter --name John --phone 98765432
           list    List all contacts
-          edit    INDEX [-name NAME] [-phone PHONE] [-email EMAIL]...
-                    e.g. edit 1 -phone 91234567 -email newemail@example.com
           delete  INDEX
+                    e.g. delete 1
           clear   Delete all contacts
+          nuke    Delete this app and all locally stored data
           help    Show this help message
           exit    Exit the application
 
