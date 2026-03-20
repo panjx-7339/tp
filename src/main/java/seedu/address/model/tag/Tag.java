@@ -18,14 +18,21 @@ public class Tag {
     public static final String ONE_DELIMITER_REGEX =
             String.format("^[^%s]*%s[^%s]*$", TAG_DELIMITER, TAG_DELIMITER, TAG_DELIMITER);
 
+    public static final int maxLength = 50;
+
     public static final String DELIMITER_MESSAGE_CONSTRAINTS =
-            "Tag name-value pairs should contain exactly one occurrence of the delimiter " + TAG_DELIMITER;
+            "Tag name-value pairs should contain exactly one occurrence of the delimiter " + TAG_DELIMITER +
+            "\nTags to be deleted should be represented by only its name, without any occurrence of the delimiter";
     public static final String NAME_MESSAGE_CONSTRAINTS =
-            "Tag names should contain at least one non-whitespace character";
+            "Tag names should contain at least one non-whitespace character and must not equal \"name\", \"phone\" or \"email\".";
     public static final String VALUE_MESSAGE_CONSTRAINTS =
-            "Tag values should contain at least one non-whitespace character";
+            "Tag values should contain at least one non-whitespace character.";
     public static final String FORMAT_MESSAGE_CONSTRAINTS =
-            "Tags should be in the format of <tag name>:<tag value>";
+            "Tags should be in the format of <tag name>:<tag value>.";
+    public static final String NAME_LENGTH_MESSAGE_CONSTRAINTS =
+            "Tag names should not exceed " + maxLength + " characters (after removing leading and trailing whitespace).";
+    public static final String VALUE_LENGTH_MESSAGE_CONSTRAINTS =
+            "Tag values should not exceed " + maxLength + " characters (after removing leading and trailing whitespace).";
 
     public final String tagName;
     public final String tagValue;
@@ -44,6 +51,8 @@ public class Tag {
 
         requireNonNull(tagName);
         requireNonNull(tagValue);
+        checkArgument(Tag.isValidLength(tagName), NAME_LENGTH_MESSAGE_CONSTRAINTS);
+        checkArgument(Tag.isValidLength(tagValue), VALUE_LENGTH_MESSAGE_CONSTRAINTS);
         checkArgument(Tag.isValidTagName(tagName), NAME_MESSAGE_CONSTRAINTS);
         checkArgument(Tag.isValidTagValue(tagValue), VALUE_MESSAGE_CONSTRAINTS);
 
@@ -70,6 +79,15 @@ public class Tag {
     }
 
     /**
+     * Checks if a given strings contains at most maxLength number of characters.
+     * @param test The string to be tested.
+     * @return Boolean indicating if the string is short enough.
+     */
+    public static boolean isValidLength(String test) {
+        return test.length() <= Tag.maxLength;
+    }
+
+    /**
      * Checks if a given string contains exactly one occurrence of the tag delimiter.
      * @param test The tag string to be tested.
      * @return Boolean indicating validity of the string.
@@ -84,7 +102,17 @@ public class Tag {
      * @return Boolean indicating validity of the name.
      */
     public static boolean isValidTagName(String test) {
-        return test.matches(WHITESPACE_REGEX) && test.matches(NO_DELIMITER_REGEX);
+        return isValidLength(test) && test.matches(WHITESPACE_REGEX) && test.matches(NO_DELIMITER_REGEX)
+                && !test.equals("name") && !test.equals("phone") && !test.equals("email");
+    }
+
+    /**
+     * Checks if a given string contains the tag delimiter.
+     * @param test The string to be tested.
+     * @return Boolean indicating validity of the string.
+     */
+    public static boolean noDelimiter(String test) {
+        return !test.contains(TAG_DELIMITER);
     }
 
     /**
@@ -93,7 +121,7 @@ public class Tag {
      * @return Boolean indicating validity of the value.
      */
     public static boolean isValidTagValue(String test) {
-        return test.matches(WHITESPACE_REGEX) && test.matches(NO_DELIMITER_REGEX);
+        return isValidLength(test) && test.matches(WHITESPACE_REGEX) && test.matches(NO_DELIMITER_REGEX);
     }
 
     /**

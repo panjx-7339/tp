@@ -57,7 +57,7 @@ public class TagTest {
     }
 
     @Test
-    public void invalidTagName() {
+    public void validity_of_tagName() {
         // null tag name
         assertThrows(NullPointerException.class, () -> Tag.isValidTagName(null));
 
@@ -70,12 +70,20 @@ public class TagTest {
         // non-whitespace but has delimiter
         assertFalse(Tag.isValidTagName("tab\t:newline\n"));
 
+        // too long
+        assertFalse(Tag.isValidTagName("a".repeat(100)));
+
+        // contains "phone" or "email"
+        assertFalse(Tag.isValidTagName("name:John Doe"));
+        assertFalse(Tag.isValidTagName("phone:87654321"));
+        assertFalse(Tag.isValidTagName("email:hello@gmail.com"));
+
         // non-whitespace with no delimiter
         assertTrue(Tag.isValidTagName("job"));
     }
 
     @Test
-    public void invalidTagValue() {
+    public void validity_of_TagValue() {
         // null tag value
         assertThrows(NullPointerException.class, () -> Tag.isValidTagValue(null));
 
@@ -87,6 +95,9 @@ public class TagTest {
 
         // non-whitespace but has delimiter
         assertFalse(Tag.isValidTagValue("tab\t:newline\n"));
+
+        // too long
+        assertFalse(Tag.isValidTagValue("a".repeat(100)));
 
         // non-whitespace with no delimiter
         assertTrue(Tag.isValidTagValue("engineer"));
@@ -115,13 +126,13 @@ public class TagTest {
 
     @Test
     public void equals_null_returnsFalse() {
-        Tag tag = new Tag("name:value");
+        Tag tag = new Tag("tagname:value");
         assertNotEquals(null, tag);
     }
 
     @Test
     public void equals_nonTagClass_returnsFalse() {
-        String tagString = "name:value";
+        String tagString = "tagname:value";
         Tag tag = new Tag(tagString);
         assertFalse(tag.equals(tagString));
     }

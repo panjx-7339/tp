@@ -19,6 +19,6 @@ public class TagDeleteParam extends Param {
 
     @Override
     boolean valueMatches(String value) {
-        return Tag.isValidTagName(value);
+        return Tag.noDelimiter(value);
     }
 }

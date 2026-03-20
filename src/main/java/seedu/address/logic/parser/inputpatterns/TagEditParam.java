@@ -19,6 +19,6 @@ public class TagEditParam extends Param {
 
     @Override
     boolean valueMatches(String value) {
-        return Tag.isValidTagPair(value);
+        return Tag.isValidTagString(value);
     }
 }

@@ -15,6 +15,7 @@ import seedu.address.model.tag.Tag;
 
 public class TagCommandParserTest {
     private final TagCommandParser parser = new TagCommandParser();
+    private final String tooLong = "a".repeat(Tag.maxLength + 10);
 
     @Test
     public void parse_emptyParameters_failure() {
@@ -35,6 +36,15 @@ public class TagCommandParserTest {
                 "Your input of 'first' does not match an expected value of the form [1...100]");
         assertParseFailure(parser, "one",
                 "Your input of 'one' does not match an expected value of the form [1...100]");
+    }
+
+    @Test
+    public void parse_tooLong_failure() {
+        assertParseFailure(parser, "1 --add " + tooLong + ":a", Tag.NAME_LENGTH_MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1 --add a:" + tooLong, Tag.VALUE_LENGTH_MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1 --edit " + tooLong + ":a", Tag.NAME_LENGTH_MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1 --edit a:" + tooLong, Tag.VALUE_LENGTH_MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1 --delete " + tooLong, Tag.NAME_LENGTH_MESSAGE_CONSTRAINTS);
     }
 
     @Test
@@ -108,9 +118,8 @@ public class TagCommandParserTest {
 
     @Test
     public void parse_invalidTagFormat_failure() {
-        assertParseFailure(parser, "1 --add invalid:tag:string",
-                "invalid:tag:string is not a valid tag format for the param --add");
-        assertParseFailure(parser, "1 --delete extra:delimiter",
-                "extra:delimiter is not a valid tag format for the param --delete");
+        assertParseFailure(parser, "1 --add no_delimiter", Tag.DELIMITER_MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1 --add invalid:tag:string", Tag.DELIMITER_MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1 --delete extra:delimiter", Tag.DELIMITER_MESSAGE_CONSTRAINTS);
     }
 }

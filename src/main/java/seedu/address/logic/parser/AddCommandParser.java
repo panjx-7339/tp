@@ -76,15 +76,19 @@ public class AddCommandParser extends Parser<AddCommand> {
             email = new Email(emailValues.get(0));
         }
 
-        Param tagAddParam = inputPattern.getParamWithId(PARAM_ID_TAG);
-        ArrayList<String> tagStrings = tagAddParam.getValues();
-        List<Tag> tags = tagStrings.stream().map(Tag::new).toList();
+        try {
+            Param tagAddParam = inputPattern.getParamWithId(PARAM_ID_TAG);
+            ArrayList<String> tagStrings = tagAddParam.getValues();
+            List<Tag> tags = tagStrings.stream().map(Tag::new).toList();
 
-        TagList tagList = new TagList(tags);
+            TagList tagList = new TagList(tags);
 
-        Person person = new Person(name, phone, email, tagList);
+            Person person = new Person(name, phone, email, tagList);
 
-        return new AddCommand(person);
+            return new AddCommand(person);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
+        }
     }
 
     /**

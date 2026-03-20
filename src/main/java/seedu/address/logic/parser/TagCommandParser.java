@@ -5,6 +5,7 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.parser.CliSyntax.PARAM_ID_TAG_ADD;
 import static seedu.address.logic.parser.CliSyntax.PARAM_ID_TAG_DELETE;
 import static seedu.address.logic.parser.CliSyntax.PARAM_ID_TAG_EDIT;
+import static seedu.address.model.tag.Tag.DELIMITER_MESSAGE_CONSTRAINTS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,10 +75,11 @@ public class TagCommandParser extends Parser<TagCommand> {
             return new TagCommand(index, addTags, editTags, deleteTags);
         } catch (ParseException e) {
             if (e.getMessage().contains("is not a valid value")) {
-                throw new ParseException(e.getMessage().replace("is not a valid value",
-                        "is not a valid tag format"));
+                throw new ParseException(DELIMITER_MESSAGE_CONSTRAINTS);
             }
             throw e;
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
         }
     }
 }
