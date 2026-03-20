@@ -15,7 +15,7 @@ import seedu.address.model.tag.Tag;
 
 public class TagCommandParserTest {
     private final TagCommandParser parser = new TagCommandParser();
-    private final String tooLong = "a".repeat(Tag.maxLength + 10);
+    private final String tooLong = "a".repeat(Tag.MAX_LENGTH + 10);
 
     @Test
     public void parse_emptyParameters_failure() {

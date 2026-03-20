@@ -83,7 +83,7 @@ public class TagTest {
     }
 
     @Test
-    public void validity_of_TagValue() {
+    public void validity_of_tagValue() {
         // null tag value
         assertThrows(NullPointerException.class, () -> Tag.isValidTagValue(null));
 
