@@ -21,6 +21,12 @@ public class SetStatusCommand extends Command {
     private final Index targetIndex;
     private final Status targetStatus;
 
+    /**
+     * Initializes a new {@code SetStatusCommand} with target status and index.
+     *
+     * @param targetStatus Target status to set to.
+     * @param targetIndex Target index of person.
+     */
     public SetStatusCommand(Status targetStatus, Index targetIndex) {
         this.targetStatus = targetStatus;
         this.targetIndex = targetIndex;
@@ -68,6 +74,10 @@ public class SetStatusCommand extends Command {
                 .toString();
     }
 
+    /**
+     * Returns string representation of specific {@code SetStatusCommand}.
+     * Used for subclasses.
+     */
     public String toString(SetStatusCommand command) {
         return new ToStringBuilder(command)
                 .add("targetStatus", targetStatus)

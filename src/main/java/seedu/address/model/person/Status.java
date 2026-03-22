@@ -1,5 +1,8 @@
 package seedu.address.model.person;
 
+/**
+ * Represents the status of a person.
+ */
 public enum Status {
     NONE {
         @Override

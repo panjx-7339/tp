@@ -58,24 +58,24 @@ public class AddressBookParser {
         logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);
 
         return switch (commandWord) {
-            case AddCommand.COMMAND_WORD -> new AddCommandParser().parse(arguments);
-            case EditCommand.COMMAND_WORD -> new EditCommandParser().parse(arguments);
-            case DeleteCommand.COMMAND_WORD -> new DeleteCommandParser().parse(arguments);
-            case TagCommand.COMMAND_WORD -> new TagCommandParser().parse(arguments);
-            case FilterCommand.COMMAND_WORD -> new FilterCommandParser().parse(arguments);
-            case ClearStatusCommand.COMMAND_WORD -> new ClearStatusCommandParser().parse(arguments);
-            case TargetStatusCommand.COMMAND_WORD -> new TargetStatusCommandParser().parse(arguments);
-            case ScammedStatusCommand.COMMAND_WORD -> new ScammedStatusCommandParser().parse(arguments);
-            case IgnoreStatusCommand.COMMAND_WORD -> new IgnoreStatusCommandParser().parse(arguments);
-            case ClearCommand.COMMAND_WORD -> new ClearCommand();
-            case ListCommand.COMMAND_WORD -> new ListCommand();
-            case ExitCommand.COMMAND_WORD -> new ExitCommand();
-            case NukeCommand.COMMAND_WORD -> new NukeCommand();
-            case HelpCommand.COMMAND_WORD -> new HelpCommand();
-            default -> {
-                logger.finer("This user input caused a ParseException: " + userInput);
-                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
-            }
+        case AddCommand.COMMAND_WORD -> new AddCommandParser().parse(arguments);
+        case EditCommand.COMMAND_WORD -> new EditCommandParser().parse(arguments);
+        case DeleteCommand.COMMAND_WORD -> new DeleteCommandParser().parse(arguments);
+        case TagCommand.COMMAND_WORD -> new TagCommandParser().parse(arguments);
+        case FilterCommand.COMMAND_WORD -> new FilterCommandParser().parse(arguments);
+        case ClearStatusCommand.COMMAND_WORD -> new ClearStatusCommandParser().parse(arguments);
+        case TargetStatusCommand.COMMAND_WORD -> new TargetStatusCommandParser().parse(arguments);
+        case ScammedStatusCommand.COMMAND_WORD -> new ScammedStatusCommandParser().parse(arguments);
+        case IgnoreStatusCommand.COMMAND_WORD -> new IgnoreStatusCommandParser().parse(arguments);
+        case ClearCommand.COMMAND_WORD -> new ClearCommand();
+        case ListCommand.COMMAND_WORD -> new ListCommand();
+        case ExitCommand.COMMAND_WORD -> new ExitCommand();
+        case NukeCommand.COMMAND_WORD -> new NukeCommand();
+        case HelpCommand.COMMAND_WORD -> new HelpCommand();
+        default -> {
+            logger.finer("This user input caused a ParseException: " + userInput);
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        }
         };
     }
 
