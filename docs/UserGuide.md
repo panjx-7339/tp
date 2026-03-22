@@ -146,7 +146,8 @@ Tips about the command, e.g. how to use it more effectively, etc.
 
 ### Viewing help : `help`
 
-Shows a message explaining how to access the help page.
+Shows a pop-up window explaining how to use the basic commands. For more details on how to use this
+application, you can also click on **Copy URL** to access the user guide.
 
 ![help message](images/helpMessage.png)
 
