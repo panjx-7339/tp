@@ -195,18 +195,15 @@ Format: `list`
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [--name NAME] [--phone PHONE] [--email EMAIL]`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
+* Existing values will be overwritten by the input values.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 1 --phone 91234567 --email johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `edit 2 --name Betsy Crower` Edits the name of the 2nd person to be `Betsy Crower`.
 
 
 ### Tagging a person : `tag`
@@ -352,7 +349,7 @@ Command   | Parameters
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **`add`**    | `NAME [--phone PHONE] [--email EMAIL] [--tag NAME:VALUE]...`<br> e.g., `add John Doe --phone 98765432 --email jognd@example.com --tag school:NUS`
 **`tag`**    | `INDEX [--add NAME:VALUE]... [--edit NAME:VALUE]... [--delete TAGNAME]...`<br> e.g., `tag 1 --add school:NUS --edit salary:10000 --delete age`
-**`edit`**   | `INDEX [--name NAME] [--phone PHONE_NUMBER] [--email EMAIL]`<br> e.g.,`edit 1 --name Jane Doe --phone 91234567 --email newemail@example.com`
+**`edit`**   | `INDEX [--name NAME] [--phone PHONE] [--email EMAIL]`<br> e.g., `edit 1 --name Jane Doe --phone 91234567 --email newemail@example.com`
 **`filter`** | `[--name NAME]... [--phone PHONE]`<br> e.g., `filter --name John --phone 98765432`
 **`list`**   | List all contacts
 **`delete`** | `INDEX`<br> e.g., `delete 1`
