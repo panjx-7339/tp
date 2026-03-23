@@ -32,6 +32,8 @@ public class HelpWindow extends UiPart<Stage> {
                             e.g. edit 1 --name Jane Doe --phone 91234567 --email newemail@example.com
           filter        filter [--name NAME]... [--phone PHONE]...
                             e.g. filter --name John --phone 98765432
+          sort          [FIELD] [--asc|--desc] [--number|--alpha]
+                            e.g. sort phone --desc --number
           clearstatus   INDEX
                             e.g. clearstatus 1
           target        INDEX
