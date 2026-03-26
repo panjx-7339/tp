@@ -42,22 +42,4 @@ public class IntegerToken extends Token {
         }
     }
 
-    @Override
-    public boolean prefixMatches(String segment) {
-        if (segment.isEmpty()) {
-            return true;
-        }
-
-        try {
-            int value = Integer.parseInt(segment);
-
-            if (value > maxValue) {
-                return false;
-            }
-
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
 }

@@ -40,16 +40,6 @@ public abstract class Token {
      */
     public abstract boolean matches(String segment);
 
-
-    /**
-     * @param segment a string entered for a token
-     * @return if the segment is definitely not a prefix of a valid input of the token, returns false.
-     *         else it returns true
-     */
-    public boolean prefixMatches(String segment) {
-        return true;
-    }
-
     /**
      * @return whether this token allow spaces, which by default is false
      */
