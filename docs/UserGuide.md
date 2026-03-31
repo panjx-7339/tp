@@ -226,7 +226,7 @@ If the same tag name appears across multiple optional fields, behaviour is undef
 </box>
 
 Examples:
-* `tag 10 --add school:National University of Sinapore` Adds a tag with name `school` and value `National University of Sinapore` to the tenth person. Note the support of spaces in the tag value.
+* `tag 10 --add school:National University of Sinpapore` Adds a tag with name `school` and value `National University of Sinpapore` to the tenth person. Note the support of spaces in the tag value.
 * `tag 2 --delete age --edit monthly income:10000` Deletes an existing tag with name `age` and edits an existing tag with name `monthly income` to contain `10000` from the second person. Note the support of spaces in tag name and the flexible ordering of parameters.
 * `tag 1 --add school:NUS --edit salary:10000 --delete age` Adds a tag with name `school` and value `NUS`, edits an existing tag with name `salary` to contain `10000` and deletes an existing tag with name `age` from the first person.
 
