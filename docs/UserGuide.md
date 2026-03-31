@@ -188,7 +188,7 @@ Format: `tag INDEX [--add NAME:VALUE]... [--edit NAME:VALUE]... [--delete TAGNAM
 * Optional fields beginning with `--delete` represents tags to be deleted. The tag with the corresponding name must already exist.
 
 <box type="warning" seamless>
-If the same tag name appears across multiple optional fields, behaviour is undefined. 2 tag names are considered equivalent if they are equal when all in lowercase with no trailing and leading spaces, and multiple consecutive spaces are interpreted as a single space. In particular, `area code` and ` Area   code` are equal.
+If the same tag name appears across multiple optional fields, behaviour is undefined. 2 tag names are considered equivalent if they are exactly equal character for character after removing leading and trailing whitespace.
 </box>
 
 Examples:
@@ -346,11 +346,13 @@ Furthermore, certain edits can cause the ScamBook to behave in unexpected ways (
 
 <!-- Upcoming features -->
 
-
+--------------------------------------------------------------------------------------------------------------------
+## Future work
+1. The current tag name equality checking is done by checking string equality. In the future, we plan to add more equality checking semantics, to guard against accidental typos from users. In particular, we will incorporate case insensitivity and flexible whitespace (consecutive spaces will be treated as one). For example, `area code` and `Area code` will be treated as equal tag names, and hence disallowed in commands requiring unique tag names (with more friendly error messages suggesting a typo was made). On the other hand, `Area code` can be used to edit the tag of `area code` of an existing person, providing more convenience.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Tutorials
+[//]: # (## Tutorials)
 
 <!-- Tutorial: Working with tags, general workflow -->
 
