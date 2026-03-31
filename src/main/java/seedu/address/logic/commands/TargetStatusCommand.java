@@ -9,10 +9,12 @@ import seedu.address.model.person.Status;
 public class TargetStatusCommand extends SetStatusCommand {
     public static final String COMMAND_WORD = "target";
 
+    public static final String EXAMPLE = COMMAND_WORD + " 1";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sets the status to be TARGET for the person at the given index.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Example: " + EXAMPLE;
 
     public TargetStatusCommand(Index targetIndex) {
         super(Status.TARGET, targetIndex);

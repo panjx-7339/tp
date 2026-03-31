@@ -27,6 +27,10 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
+    public static final String EXAMPLE = COMMAND_WORD + " 1 "
+            + PARAM_ID_PHONE + " 91234567 "
+            + PARAM_ID_EMAIL + " johndoe@example.com";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
@@ -34,9 +38,7 @@ public class EditCommand extends Command {
             + "[" + PARAM_ID_NAME + "] "
             + "[" + PARAM_ID_PHONE + "] "
             + "[" + PARAM_ID_EMAIL + "] "
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PARAM_ID_PHONE + " 91234567 "
-            + PARAM_ID_EMAIL + " johndoe@example.com";
+            + "Example: " + EXAMPLE;
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PARAM_ID_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PARAM_ID_NAME;
 import static seedu.address.logic.parser.CliSyntax.PARAM_ID_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PARAM_ID_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -27,10 +28,16 @@ public class FilterCommand extends Command {
 
     public static final String COMMAND_WORD = "filter";
 
+    public static final String EXAMPLE = COMMAND_WORD + " "
+            + PARAM_ID_NAME + " John "
+            + PARAM_ID_PHONE + " 98765432 "
+            + PARAM_ID_EMAIL + " johnd@example.com "
+            + PARAM_ID_TAG + " school:NUS ";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Filters profiles by the specified parameters.\n"
             + "Parameters: [" + PARAM_ID_NAME + " <name>]* [" + PARAM_ID_PHONE + " <phone>]* "
             + "[" + PARAM_ID_EMAIL + " <email>]* [--<tagName>:<tagValue>]*\n"
-            + "Example: " + COMMAND_WORD + " " + PARAM_ID_NAME + " Tom " + PARAM_ID_PHONE + " 88345678 ";
+            + "Example: " + EXAMPLE;
 
     public static final String MESSAGE_SUCCESS = "Filtered victim profiles.";
 

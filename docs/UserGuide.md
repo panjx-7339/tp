@@ -187,7 +187,7 @@ Filters the list of persons in the address book to show only those that match th
 
 If multiple parameters of the same type are specified, only persons that match all of the specified parameters will be shown. If multiple parameters of different types are specified, persons that match at least one of the specified parameters will be shown.
 
-Format: `filter [--name NAME]... [--phone PHONE]...`
+Format: `filter [--name NAME]... [--phone PHONE] [--email EMAIL] [--tag NAME:VALUE]...`
 
 - `filter --name John --phone 98765432`
   Shows all persons whose name contains `John` and phone number is `98765432`.

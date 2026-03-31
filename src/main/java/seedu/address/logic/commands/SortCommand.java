@@ -16,14 +16,18 @@ public class SortCommand extends Command {
 
     public static final String COMMAND_WORD = "sort";
 
+    public static final String EXAMPLE_ONE = COMMAND_WORD + "\n";
+    public static final String EXAMPLE_TWO = COMMAND_WORD + " phone --desc --NUMBER";
+    public static final String EXAMPLE_THREE = COMMAND_WORD + " income --alpha";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD
          + ": Sorts current view by field.\n"
          + "Syntax: sort {NAME,phone,email,<tagName>} [{--ASC,--desc}] [{--NUMBER,--alpha}]\n"
          + "Defaults when omitted: NAME, --ASC, --NUMBER\n"
          + "Examples:\n"
-         + "  " + COMMAND_WORD + "\n"
-         + "  " + COMMAND_WORD + " phone --desc --NUMBER\n"
-         + "  " + COMMAND_WORD + " income --alpha";
+         + "  " + EXAMPLE_ONE
+         + "  " + EXAMPLE_TWO + "\n"
+         + "  " + EXAMPLE_THREE;
 
     /**
      * Defines the possible fields to sort by and the sort order.

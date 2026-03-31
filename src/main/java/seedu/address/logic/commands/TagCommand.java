@@ -22,12 +22,14 @@ public class TagCommand extends Command {
 
     public static final String COMMAND_WORD = "tag";
 
+    public static final String EXAMPLE = COMMAND_WORD + " 1 " + PARAM_ID_TAG_ADD + " school:NUS "
+            + PARAM_ID_TAG_EDIT + " salary:10000 " + PARAM_ID_TAG_DELETE + " age";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Manages tags of a profile."
             + "Parameters: INDEX (starting from 1) "
             + "[" + PARAM_ID_TAG_ADD + " <tag-name>:<tag-value>] "
             + "[" + PARAM_ID_TAG_EDIT + " <existing tag-name>:<new tag-value>] "
             + "[" + PARAM_ID_TAG_DELETE + " <existing tag-name>]\n"
-            + "Example: " + COMMAND_WORD + " 1 --add school:NUS --edit salary:10000 --delete age";
+            + "Example: " + EXAMPLE;
 
     public static final String MESSAGE_SUCCESS = "Tags successfully updated";
     public static final String ADD_TAG_ALREADY_EXISTS = "Tag name of tag to be added already exists.";

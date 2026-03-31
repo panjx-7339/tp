@@ -9,10 +9,12 @@ import seedu.address.model.person.Status;
 public class ClearStatusCommand extends SetStatusCommand {
     public static final String COMMAND_WORD = "clearstatus";
 
+    public static final String EXAMPLE = COMMAND_WORD + " 1";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Clears the status of the person at the given index.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Example: " + EXAMPLE;
 
     public ClearStatusCommand(Index targetIndex) {
         super(Status.NONE, targetIndex);

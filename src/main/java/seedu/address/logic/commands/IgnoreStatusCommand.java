@@ -9,10 +9,12 @@ import seedu.address.model.person.Status;
 public class IgnoreStatusCommand extends SetStatusCommand {
     public static final String COMMAND_WORD = "ignore";
 
+    public static final String EXAMPLE = COMMAND_WORD + " 1";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sets the status to be IGNORE for the person at the given index.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Example: " + EXAMPLE;
 
     public IgnoreStatusCommand(Index targetIndex) {
         super(Status.IGNORE, targetIndex);
