@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+
 /**
  * Represents a Person's phone number in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
@@ -11,7 +13,7 @@ public class Phone {
 
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Phone numbers should only contain numbers, and it should be at least 3 digits long";
+            "Phone numbers should only contain numbers (no spaces!), and it should be at least 3 digits long";
     public static final String VALIDATION_REGEX = "\\d{3,}";
     public final String value;
 
@@ -22,15 +24,23 @@ public class Phone {
      */
     public Phone(String phone) {
         requireNonNull(phone);
-        checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
+        try {
+            isValidPhone(phone);
+        } catch (IllegalValueException e) {
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
+        }
         value = phone;
     }
 
     /**
      * Returns true if a given string is a valid phone number.
      */
-    public static boolean isValidPhone(String test) {
-        return test.matches(VALIDATION_REGEX);
+    public static boolean isValidPhone(String test) throws IllegalValueException {
+        if (test.matches(VALIDATION_REGEX)) {
+            return true;
+        } else {
+            throw new IllegalValueException(test + " is not a valid phone number.\n" + MESSAGE_CONSTRAINTS);
+        }
     }
 
     @Override

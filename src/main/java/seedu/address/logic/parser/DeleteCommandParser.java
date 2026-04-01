@@ -33,18 +33,13 @@ public class DeleteCommandParser extends Parser<DeleteCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public DeleteCommand parse(String args) throws ParseException {
-        try {
-            requireNonNull(args);
-            InputPattern inputPattern = createInputPattern();
-            inputPattern.assignSegmentsFromArgs(args.strip());
+        requireNonNull(args);
+        InputPattern inputPattern = createInputPattern();
+        inputPattern.assignSegmentsFromArgs(args.strip());
 
-            Token indexToken = inputPattern.getTokenWithId("index");
-            Index index = ParserUtil.parseIndex(indexToken.getAssignedSegment());
-            return new DeleteCommand(index);
-        } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
-        }
+        Token indexToken = inputPattern.getTokenWithId("index");
+        Index index = ParserUtil.parseIndex(indexToken.getAssignedSegment());
+        return new DeleteCommand(index);
     }
 
 }

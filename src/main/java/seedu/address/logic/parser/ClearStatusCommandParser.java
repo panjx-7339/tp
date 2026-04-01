@@ -28,17 +28,12 @@ public class ClearStatusCommandParser extends Parser<ClearStatusCommand> {
 
     @Override
     ClearStatusCommand parse(String args) throws ParseException {
-        try {
-            requireNonNull(args);
-            InputPattern inputPattern = createInputPattern();
-            inputPattern.assignSegmentsFromArgs(args.strip());
+        requireNonNull(args);
+        InputPattern inputPattern = createInputPattern();
+        inputPattern.assignSegmentsFromArgs(args.strip());
 
-            Token indexToken = inputPattern.getTokenWithId("index");
-            Index index = ParserUtil.parseIndex(indexToken.getAssignedSegment());
-            return new ClearStatusCommand(index);
-        } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ClearStatusCommand.MESSAGE_USAGE), pe);
-        }
+        Token indexToken = inputPattern.getTokenWithId("index");
+        Index index = ParserUtil.parseIndex(indexToken.getAssignedSegment());
+        return new ClearStatusCommand(index);
     }
 }

@@ -3,6 +3,10 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import javax.swing.*;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
 /**
  * Represents a Person's name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
@@ -27,15 +31,23 @@ public class Name {
      */
     public Name(String name) {
         requireNonNull(name);
-        checkArgument(isValidName(name), MESSAGE_CONSTRAINTS);
+        try {
+            isValidName(name);
+        } catch (IllegalValueException e) {
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
+        }
         fullName = name;
     }
 
     /**
      * Returns true if a given string is a valid name.
      */
-    public static boolean isValidName(String test) {
-        return test.matches(VALIDATION_REGEX);
+    public static boolean isValidName(String test) throws IllegalValueException {
+        if (test.matches(VALIDATION_REGEX)) {
+            return true;
+        } else {
+            throw new IllegalValueException(test + " is not a valid name.\n" + MESSAGE_CONSTRAINTS);
+        }
     }
 
 

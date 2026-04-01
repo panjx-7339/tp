@@ -1,10 +1,13 @@
 package seedu.address.model.person;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 public class PhoneTest {
 
@@ -20,17 +23,16 @@ public class PhoneTest {
     }
 
     @Test
-    public void isValidPhone() {
+    public void isValidPhone() throws IllegalValueException {
         // null phone number
         assertThrows(NullPointerException.class, () -> Phone.isValidPhone(null));
 
         // invalid phone numbers
-        assertFalse(Phone.isValidPhone("")); // empty string
-        assertFalse(Phone.isValidPhone(" ")); // spaces only
-        assertFalse(Phone.isValidPhone("91")); // less than 3 numbers
-        assertFalse(Phone.isValidPhone("phone")); // non-numeric
-        assertFalse(Phone.isValidPhone("9011p041")); // alphabets within digits
-        assertFalse(Phone.isValidPhone("9312 1534")); // spaces within digits
+        // empty string, spaces only, less than 3 numbers, non-numeric, alphabets within digits, spaces within digits
+        for (String phone : new String[]{"", " ", "91", "phone", "9011p041", "9312 1534"}) {
+            Exception e = assertThrows(IllegalValueException.class, () -> Phone.isValidPhone(phone));
+            assertEquals(phone + " is not a valid phone number.\n" + Phone.MESSAGE_CONSTRAINTS, e.getMessage());
+        }
 
         // valid phone numbers
         assertTrue(Phone.isValidPhone("911")); // exactly 3 numbers

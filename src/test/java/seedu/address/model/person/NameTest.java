@@ -1,10 +1,14 @@
 package seedu.address.model.person;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.testutil.Assert.assertThrows;
+
 
 import org.junit.jupiter.api.Test;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 public class NameTest {
 
@@ -20,15 +24,16 @@ public class NameTest {
     }
 
     @Test
-    public void isValidName() {
+    public void isValidName() throws IllegalValueException {
         // null name
         assertThrows(NullPointerException.class, () -> Name.isValidName(null));
 
         // invalid name
-        assertFalse(Name.isValidName("")); // empty string
-        assertFalse(Name.isValidName(" ")); // spaces only
-        assertFalse(Name.isValidName("^")); // only non-alphanumeric characters
-        assertFalse(Name.isValidName("peter*")); // contains non-alphanumeric characters
+        // empty string, spaces only, only non-alphanumeric characters, contains non-alphanumeric characters
+        for (String name : new String[]{"", " ", "^", "peter*"}) {
+            Exception e = assertThrows(IllegalValueException.class, () -> Name.isValidName(name));
+            assertEquals(name + " is not a valid name.\n" + Name.MESSAGE_CONSTRAINTS, e.getMessage());
+        }
 
         // valid name
         assertTrue(Name.isValidName("peter jack")); // alphabets only

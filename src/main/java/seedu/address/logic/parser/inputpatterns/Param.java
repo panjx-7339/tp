@@ -73,7 +73,7 @@ public abstract class Param extends Token {
         return value;
     }
 
-    abstract boolean valueMatches(String value)  throws IllegalValueException;
+    abstract boolean valueMatches(String value) throws IllegalValueException;
 
     /**
      * Appends the value to the ArrayList of values

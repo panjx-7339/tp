@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+
 /**
  * Represents a Person's email in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
@@ -21,6 +23,9 @@ public class Email {
             + "    - end with a domain label at least 2 characters long\n"
             + "    - have each domain label start and end with alphanumeric characters\n"
             + "    - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.";
+    public static final String INVALID_STRING = " is not a valid email.\n" +
+            "Refer to the user guide for all the constraints an email should satisfy.";
+
     // alphanumeric and special characters
     private static final String ALPHANUMERIC_NO_UNDERSCORE = "[^\\W_]+"; // alphanumeric characters except underscore
     private static final String LOCAL_PART_REGEX = "^" + ALPHANUMERIC_NO_UNDERSCORE + "([" + SPECIAL_CHARACTERS + "]"
@@ -40,15 +45,23 @@ public class Email {
      */
     public Email(String email) {
         requireNonNull(email);
-        checkArgument(isValidEmail(email), MESSAGE_CONSTRAINTS);
+        try {
+            isValidEmail(email);
+        } catch (IllegalValueException e) {
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
+        }
         value = email;
     }
 
     /**
      * Returns if a given string is a valid email.
      */
-    public static boolean isValidEmail(String test) {
-        return test.matches(VALIDATION_REGEX);
+    public static boolean isValidEmail(String test) throws IllegalValueException {
+        if (test.matches(VALIDATION_REGEX)) {
+            return true;
+        } else {
+            throw new IllegalValueException(test + INVALID_STRING);
+        }
     }
 
     @Override
