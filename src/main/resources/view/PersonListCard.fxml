@@ -46,6 +46,5 @@
                 <Insets top="10" right="10" />
             </StackPane.margin>
         </ImageView>
-
     </StackPane>
 </HBox>
