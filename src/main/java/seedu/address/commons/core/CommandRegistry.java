@@ -32,7 +32,11 @@ import seedu.address.logic.commands.TargetStatusCommand;
  *
  */
 public class CommandRegistry {
+    public static final String NO_ARGUMENTS_DESCRIPTION = "<no arguments>";
+
     private static final Map<String, CommandInfo> COMMANDS = new LinkedHashMap<>();
+
+
 
     private CommandRegistry() {} // prevent instantiation
 
@@ -63,11 +67,11 @@ public class CommandRegistry {
         register(ScamStatusCommand.COMMAND_WORD, "INDEX", ScamStatusCommand.EXAMPLE);
         register(IgnoreStatusCommand.COMMAND_WORD, "INDEX", IgnoreStatusCommand.EXAMPLE);
 
-        register(ListCommand.COMMAND_WORD, "<no arguments>");
-        register(ClearCommand.COMMAND_WORD, "<no arguments>");
-        register(NukeCommand.COMMAND_WORD, "<no arguments>");
-        register(HelpCommand.COMMAND_WORD, "<no arguments>");
-        register(ExitCommand.COMMAND_WORD, "<no arguments>");
+        register(ListCommand.COMMAND_WORD, NO_ARGUMENTS_DESCRIPTION);
+        register(ClearCommand.COMMAND_WORD, NO_ARGUMENTS_DESCRIPTION);
+        register(NukeCommand.COMMAND_WORD, NO_ARGUMENTS_DESCRIPTION);
+        register(HelpCommand.COMMAND_WORD, NO_ARGUMENTS_DESCRIPTION);
+        register(ExitCommand.COMMAND_WORD, NO_ARGUMENTS_DESCRIPTION);
     }
 
     private static void register(String name, String description, String example) {

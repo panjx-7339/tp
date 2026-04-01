@@ -30,22 +30,30 @@ public class ResultDisplay extends UiPart<Region> {
     }
 
     public void setFormatTooltipFromPartialCommand(String partialCommand) {
+
+        partialCommand = partialCommand.stripLeading();
         String[] segments = partialCommand.split(" ");
 
+        if (partialCommand.isEmpty()) {
+            return;
+        }
         if (segments.length == 0) {
             return;
         }
 
-        String commandWord = partialCommand.split(" ")[0];
-
+        String commandWord = segments[0];
         Optional<CommandInfo> commandInfo = CommandRegistry.getCommandInfo(commandWord);
 
-        if (commandInfo.isEmpty()) {
-            setFeedbackToUser("Warning: " + commandWord + " is not a valid command!");
-        } else {
+        if (commandInfo.isPresent()) {
+            // if command found
             String line1 = "Format:";
             String line2 = commandWord + " " + commandInfo.get().getDescription();
             setFeedbackToUser(line1 + "\n" + line2);
+        } else {
+            if (partialCommand.contains(" ")) {
+                setFeedbackToUser("Warning:\n" + commandWord + " is not a valid command!");
+            }
+            // else do nothing as the command is not fully inputted anw
         }
 
     }
