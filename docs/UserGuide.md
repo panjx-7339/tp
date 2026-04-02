@@ -7,6 +7,8 @@
 ScamBook User Guide
 ---
 
+---------------------------------
+
 <!-- * Table of Contents -->
 <page-nav-print />
 
@@ -14,7 +16,7 @@ ScamBook User Guide
 
 ### What is ScamBook?
 
-ScamBook is a **desktop contact management app** optimised for use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI).
+ScamBook is a **desktop contact management app** optimised for use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI).  ScamBook allows users to track **large numbers of contacts** with flexible **user-defined** information metrics. It is equipped with features for users to **define and manipulate specific details** for each profile, offering maximum freedom to **record, filter, and sort** any detail. Plus, enjoy **ultimate security** with 100% **locally** stored data, erasable **instantly**.
 
 ### Who is ScamBook for?
 
@@ -154,6 +156,8 @@ Tips about the command, e.g. how to use it more effectively, etc.
 
 -->
 
+<br>
+
 ### Constraints on input values
 Emails should be of the format `local-part@domain` and adhere to the following constraints:
 1. The `local-part` should only contain alphanumeric characters and these special characters: `+_.-`. The `local-part` may not start or end with any special characters.
@@ -163,6 +167,7 @@ Emails should be of the format `local-part@domain` and adhere to the following c
     - have each domain label start and end with alphanumeric characters
    - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.
 
+<br>
 
 ### Adding a person: `add`
 
@@ -174,6 +179,7 @@ Format: `add NAME [--phone PHONE] [--email EMAIL] [--tag TAGNAME:TAGVALUE]...`
 * If multiple tag name-value pairs have the same tag name (see section on [Tag](#tagging-a-person--tag) below regarding tag name equality), the last value will be used.
 
 <box type="tip" seamless>
+
 **Tip:** A person can have any number of tags (including 0)
 
 </box>
@@ -183,6 +189,7 @@ Examples:
 * `add Besty Croew --tag income:$100000 --tag bank:OCBC`
 
 
+<br>
 
 ### Editing a person : `edit`
 
@@ -199,6 +206,8 @@ Examples:
 * `edit 2 --name Betsy Crower` Edits the name of the 2nd person to be `Betsy Crower`.
 
 
+<br>
+
 ### Deleting a person : `delete`
 
 Deletes the specified person from the ScamBook.
@@ -214,16 +223,25 @@ Examples:
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
 
+<br>
+
 ### Tagging a person : `tag`
 
 <!-- TODO: add visuals -->
 
-Modifies (add, edit or delete) the tags of an existing person in the ScamBook.
+A tag is a name-value pair that allows the user to record any arbitrary information so desired about a profile. This is achieved by this command, which modifies (add, edit or delete) the tags of an existing person in the ScamBook. In the image below of an example profile in the app, each blue box represents a tag-value pair capturing some useful information about the person.
+
+
+<center><img src="images/example_profile_with_tags.png" alt="Example profile with tags" width="400"/></center>
+
+<br>
 
 Format: `tag INDEX [--add NAME:VALUE]... [--edit NAME:VALUE]... [--delete TAGNAME]...​`
 
 <box type="warning" seamless>
-**Caution:** `NAME`, `VALUE`, `TAGNAME` must NOT contain colons (`:`). Otherwise, an error will be displayed. Users are advised not to include double dashes as well (`--`), otherwise behaviour is undefined.
+
+**Caution:** `NAME`, `VALUE`, `TAGNAME`  must NOT contain colons (`:`). Otherwise, an error will be displayed. Users are advised not to include double dashes as well (`--`), otherwise behaviour is undefined.
+
 </box>
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
@@ -241,6 +259,8 @@ Examples:
 * `tag 2 --delete age --edit monthly income:10000` Deletes an existing tag with name `age` and edits an existing tag with name `monthly income` to contain `10000` from the second person. Note the support of spaces in tag name and the flexible ordering of parameters.
 * `tag 1 --add school:NUS --edit salary:10000 --delete age` Adds a tag with name `school` and value `NUS`, edits an existing tag with name `salary` to contain `10000` and deletes an existing tag with name `age` from the first person.
 
+
+<br>
 
 ### Filtering the list of persons : `filter`
 
@@ -262,6 +282,8 @@ The filter command filters the displayed list of persons, and other commands wil
 </box>
 
 
+<br>
+
 ### Sorting the list of persons : `sort`
 
 Sorts the current list of persons by a specified field.
@@ -279,15 +301,21 @@ Examples:
 * `sort income --alpha` Sorts by the `income` tag alphabetically.
 
 
+<br>
 
-### Marking the status of a person: `clearstatus`, `target`, `scam`, or `ignore`
+### Marking person status: `clearstatus`, `target`, `scam`, or `ignore`
 
-Sets the status of a specific person. We currently support 4 common statuses, each represented by its corresponding command name.
+Sets the status of a specific person. We currently support 4 common statuses, each represented by its corresponding command name. Referring the image below, the emoji of each profile represents its status, as set by the four commands, in order.
+1. No status, via `clearstatus`.
+2. A potential target, via `target`.
+3. Already scammed, via `scam`.
+4. To be ignored, via `ignore`.
 
-In this section, `status_command` can be replaced by either one of `clearstatus`, `target`, `scam`, or `ignore`.
+![Example screenshot of status commands](images/status_command.png)
 
 Format: `status_command INDEX`
 
+* `status_command` should be replaced by either one of `clearstatus`, `target`, `scam`, or `ignore`.
 * Sets the status of the person at the specified `INDEX`.
 * The new status overwrites any previously existing status, i.e. each person can have exactly 1 status at any time (no status is also a status).
 * Setting a particular status for a person that already has the corresponding status will do nothing (and success message will be displayed).
@@ -301,6 +329,7 @@ Examples:
 * `clearstatus 1` clears the first person of any indicated status.
 
 
+<br>
 
 ### Listing all persons : `list`
 
@@ -309,12 +338,16 @@ Shows a list of all persons in the ScamBook.
 Format: `list`
 
 
+<br>
+
 ### Clearing all entries : `clear`
 
 Clears all entries from the ScamBook.
 
 Format: `clear`
 
+
+<br>
 
 ### Deleting the app and all data: `nuke`
 
@@ -323,9 +356,13 @@ Deletes the app and all locally stored data.
 Format: `nuke`
 
 <box type="warning" seamless>
+
 **Caution:** This action is irreversible. Use with caution.
+
 </box>
 
+
+<br>
 
 ### Viewing help : `help`
 
@@ -337,6 +374,8 @@ application, you can also click on **Copy URL** to access the user guide.
 Format: `help`
 
 
+<br>
+
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -346,16 +385,21 @@ Format: `exit`
 
 
 
+<br>
+
 ### Saving the data
 
 ScamBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
+
+<br>
 
 ### Editing the data file
 
 ScamBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
+
 **Caution:**
 If your changes to the data file makes its format invalid, ScamBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the ScamBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.

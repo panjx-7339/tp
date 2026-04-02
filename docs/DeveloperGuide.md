@@ -142,14 +142,6 @@ The `Model` component,
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
-<box type="info" seamless>
-
-**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `ScamBook`, which `Person` references. This allows `ScamBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
-
-<puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
-
-</box>
-
 
 ### Storage component
 
@@ -263,10 +255,10 @@ Phone-call based scam caller who
 
 **Value proposition**:
 * Manages large volumes of scam caller victims' contact information in Singapore
-* Possible identification, and visualisation of victim social networks
+* Flexibility in allowing arbitrary user-defined information to be stored for each victim
 * Filter/sort for high-risk / low-reward victims
-* Reminders to follow-up on certain higher potential victims
 * Single-user application for security and anonymity
+* Full data wipe in case of emergency situations
 
 
 ### User stories
@@ -323,7 +315,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case ends.
 
 * 2a. Specified attribute(s) is/are invalid.
-    * 2a1. System shows an error message with the expected format.
+    * 2a1. System shows an error message indicating the issue with the first invalid attribute.
 
       Use case ends.
 
@@ -368,7 +360,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case ends.
 
 * 2a. No profiles match the query.
-    * 2a1. System shows a message indicating no results found.
+    * 2a1. System shows an empty list of profiles.
 
       Use case ends.
 
@@ -385,8 +377,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions:**
 
-* 2a. No profile has the specified tag, or the tag name is invalid.
-    * 2a1. System shows an error listing example valid tags.
+* 2a. Some profiles do not have the specified tags.
+    * 2a1. System moves these profiles to the bottom of the displayed list.
 
       Use case ends.
 
@@ -446,44 +438,28 @@ testers are expected to do more *exploratory* testing.
 
 </box>
 
-### Launch and shutdown
+Please follow the setup instructions in the [user guide](UserGuide.html#installation) to install and run the app. Assuming no commands have been entered yet, and that the default sample data is loaded, here is a list of commands one could follow, which emulates a realistic scenario of using the app that uses (almost) all commands. All commands should be successful and should result in a success message displayed.
+1. `help`
+2. `add Bernado --phone 87019942 --tag job: manager`
+3. `edit 4 --email davidli@u.nus.edu`
+4. `delete 6`
+5. `tag 3 --add monthly income: 12000 --edit children:5 --delete language`
+6. `scam 1`
+7. `ignore 2`
+8. `clearstatus 3`
+9. `filter --tag job:manager`
+10. `sort monthly income`
+11. `target 2`
+12. `list`
+13. `clear`
+14. `exit`
 
-1. Initial launch
+<br>
 
-   1. Download the jar file and copy into an empty folder
+## **Appendix: Effort**
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-1. Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+<br>
 
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
-
-1. _{ more test cases …​ }_
-
-### Deleting a person
-
-1. Deleting a person while all persons are being shown
-
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
-
-1. _{ more test cases …​ }_
-
-### Saving data
-
-1. Dealing with missing/corrupted data files
-
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-1. _{ more test cases …​ }_
+## **Appendix: Planned enhancements**
