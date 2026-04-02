@@ -3,6 +3,7 @@ package seedu.address.logic.parser.inputpatterns;
 import java.util.ArrayList;
 import java.util.List;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 
@@ -120,12 +121,12 @@ public class InputPattern {
             String segment = combinedSegments.get(i);
             Token token = this.tokens.get(i);
 
-            if (!token.matches(segment)) {
-                throw new ParseException("Your input of '" + segment
-                        + "' does not match an expected value of the form " + token.getPreview());
+            try {
+                token.matches(segment);
+                token.setAssignedSegment(segment);
+            } catch (IllegalValueException e) {
+                throw new ParseException(e.getMessage());
             }
-
-            token.setAssignedSegment(segment);
         }
 
         /// settle the paramsArgs
@@ -148,14 +149,14 @@ public class InputPattern {
                     continue;
                 }
 
-                if (!param.matches(segment)) {
-                    throw new ParseException(param.getValueFromSegment(segment)
-                            + " is not a valid value for the param " + param.getId());
+                try {
+                    param.matches(segment);
+                    param.addValueFromSegment(segment);
+                    hasMatchingSegment = true;
+                    break;
+                } catch (IllegalValueException e) {
+                    throw new ParseException(e.getMessage());
                 }
-
-                param.addValueFromSegment(segment);
-                hasMatchingSegment = true;
-                break;
             }
 
             if (!hasMatchingSegment) {
@@ -209,8 +210,12 @@ public class InputPattern {
                     while (segmentPointer < rawSegments.size()) {
                         String nextSegment = rawSegments.get(segmentPointer);
 
-                        if (nextToken.matches(nextSegment)) {
-                            break;
+                        try {
+                            if (nextToken.matches(nextSegment)) {
+                                break;
+                            }
+                        } catch (IllegalValueException ignored) {
+                            // Nothing is supposed to happen
                         }
 
                         segmentsToJoin.add(nextSegment);

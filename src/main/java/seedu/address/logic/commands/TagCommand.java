@@ -67,7 +67,8 @@ public class TagCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_OUT_OF_BOUNDS_PERSON_INDEX);
+            throw new CommandException(Messages.MESSAGE_OUT_OF_BOUNDS_PERSON_INDEX
+                    + "\nThere is/are only " + lastShownList.size() + " person(s) in the list.");
         }
 
         Person person = lastShownList.get(index.getZeroBased());

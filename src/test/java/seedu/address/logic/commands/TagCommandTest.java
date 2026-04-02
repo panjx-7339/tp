@@ -111,7 +111,8 @@ public class TagCommandTest {
         Model model = newModelWithPerson(ALICE);
         Index outOfBoundIndex = Index.fromOneBased(2);
         TagCommand tagCommand = new TagCommand(outOfBoundIndex, List.of(), List.of(), List.of());
-        assertCommandFailure(tagCommand, model, Messages.MESSAGE_OUT_OF_BOUNDS_PERSON_INDEX);
+        assertCommandFailure(tagCommand, model, Messages.MESSAGE_OUT_OF_BOUNDS_PERSON_INDEX
+                + "\nThere is/are only " + model.getFilteredPersonList().size() + " person(s) in the list.");
     }
 
     @Test

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.inputpatterns.EmailParam;
@@ -57,8 +58,10 @@ public class AddCommandParser extends Parser<AddCommand> {
 
         Token nameToken = inputPattern.getTokenWithId("name");
         String nameString = nameToken.getAssignedSegment();
-        if (!Name.isValidName(nameString)) {
-            throw new ParseException("Name inputted: " + nameString + "\n" + Name.MESSAGE_CONSTRAINTS);
+        try {
+            Name.validateName(nameString);
+        } catch (IllegalValueException e) {
+            throw new ParseException(e.getMessage());
         }
         Name name = new Name(nameString);
 

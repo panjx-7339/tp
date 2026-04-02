@@ -2,6 +2,7 @@ package seedu.address.logic.parser.inputpatterns;
 
 import static seedu.address.logic.parser.CliSyntax.PARAM_ID_PHONE;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Phone;
 
 
@@ -21,7 +22,7 @@ public class PhoneParam extends Param {
     }
 
     @Override
-    boolean valueMatches(String value) {
-        return Phone.isValidPhone(value);
+    boolean valueMatches(String value) throws IllegalValueException {
+        return Phone.validatePhone(value);
     }
 }

@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.TagCommand;
+import seedu.address.logic.parser.inputpatterns.IntegerToken;
 import seedu.address.model.tag.Tag;
 
 public class TagCommandParserTest {
@@ -33,18 +34,19 @@ public class TagCommandParserTest {
     @Test
     public void parse_nonIntegerIndex_failure() {
         assertParseFailure(parser, "first",
-                "Your input of 'first' does not match an expected value of the form [1...2147483647]");
+                "first" + IntegerToken.INVALID_STRING);
         assertParseFailure(parser, "one",
-                "Your input of 'one' does not match an expected value of the form [1...2147483647]");
+                "one" + IntegerToken.INVALID_STRING);
     }
 
     @Test
     public void parse_tooLong_failure() {
-        assertParseFailure(parser, "1 --add " + tooLong + ":a", Tag.NAME_LENGTH_MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1 --add a:" + tooLong, Tag.VALUE_LENGTH_MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1 --edit " + tooLong + ":a", Tag.NAME_LENGTH_MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1 --edit a:" + tooLong, Tag.VALUE_LENGTH_MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1 --delete " + tooLong, Tag.NAME_LENGTH_MESSAGE_CONSTRAINTS);
+        String m = " is too long, it should not exceed " + Tag.MAX_LENGTH + " characters.";
+        assertParseFailure(parser, "1 --add " + tooLong + ":a", tooLong + m);
+        assertParseFailure(parser, "1 --add a:" + tooLong, tooLong + m);
+        assertParseFailure(parser, "1 --edit " + tooLong + ":a", tooLong + m);
+        assertParseFailure(parser, "1 --edit a:" + tooLong, tooLong + m);
+        assertParseFailure(parser, "1 --delete " + tooLong, tooLong + m);
     }
 
     @Test
@@ -118,8 +120,8 @@ public class TagCommandParserTest {
 
     @Test
     public void parse_invalidTagFormat_failure() {
-        assertParseFailure(parser, "1 --add no_delimiter", Tag.DELIMITER_MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1 --add invalid:tag:string", Tag.DELIMITER_MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1 --delete extra:delimiter", Tag.DELIMITER_MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1 --add no_delimiter", Tag.ONE_DELIMITER_CONSTRAINT);
+        assertParseFailure(parser, "1 --add invalid:tag:string", Tag.ONE_DELIMITER_CONSTRAINT);
+        assertParseFailure(parser, "1 --delete extra:delimiter", Tag.DELETE_TAG_NAME_ONLY);
     }
 }

@@ -6,31 +6,45 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-  <GridPane HBox.hgrow="ALWAYS">
-    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
-    </columnConstraints>
-    <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
-      <padding>
-        <Insets top="5" right="5" bottom="5" left="15" />
-      </padding>
-      <HBox spacing="0.5" alignment="CENTER_LEFT">
-        <Label fx:id="id" styleClass="cell_big_label">
-          <minWidth>
-            <!-- Ensures that the label text is never truncated -->
-            <Region fx:constant="USE_PREF_SIZE" />
-          </minWidth>
-        </Label>
-        <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
-      </HBox>
+    <StackPane HBox.hgrow="ALWAYS">
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+            </columnConstraints>
+            <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
+                <padding>
+                    <Insets top="5" right="5" bottom="5" left="15" />
+                </padding>
+                <HBox spacing="0.5" alignment="CENTER_LEFT">
+                    <Label fx:id="id" styleClass="cell_big_label">
+                        <minWidth>
+                            <Region fx:constant="USE_PREF_SIZE" />
+                        </minWidth>
+                    </Label>
+                    <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
+                </HBox>
 
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-      <FlowPane fx:id="tags" />
-    </VBox>
-  </GridPane>
+                <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
+                <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
+                <FlowPane fx:id="tags" />
+            </VBox>
+        </GridPane>
+
+        <ImageView fx:id="statusImage" fitHeight="40" fitWidth="40" pickOnBounds="true" preserveRatio="true"
+                   StackPane.alignment="TOP_RIGHT">
+            <image>
+                <Image url="@/images/target_status.png" />
+            </image>
+            <StackPane.margin>
+                <Insets top="10" right="10" />
+            </StackPane.margin>
+        </ImageView>
+    </StackPane>
 </HBox>

@@ -1,5 +1,7 @@
 package seedu.address.logic.parser.inputpatterns;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+
 /**
  * A Token that takes in any non-empty String as an input
  */
@@ -21,9 +23,9 @@ public class StringToken extends Token {
     }
 
     @Override
-    public boolean matches(String segment) {
+    public boolean matches(String segment) throws IllegalValueException {
         if (segment.isEmpty()) {
-            return false;
+            throw new IllegalValueException(tokenPreview + " cannot be empty");
         }
         return true;
     }

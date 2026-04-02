@@ -2,6 +2,7 @@ package seedu.address.logic.parser.inputpatterns;
 
 import java.util.ArrayList;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 
@@ -46,7 +47,7 @@ public abstract class Param extends Token {
      * @return whether it matches
      */
     @Override
-    public boolean matches(String segment) {
+    public boolean matches(String segment) throws IllegalValueException {
         if (!idMatches(segment)) {
             return false;
         }
@@ -72,7 +73,7 @@ public abstract class Param extends Token {
         return value;
     }
 
-    abstract boolean valueMatches(String value);
+    abstract boolean valueMatches(String value) throws IllegalValueException;
 
     /**
      * Appends the value to the ArrayList of values
@@ -80,8 +81,6 @@ public abstract class Param extends Token {
      * @param segment the segment of text to add from
      */
     public void addValueFromSegment(String segment) {
-        assert(matches(segment));
-
         String value = getValueFromSegment(segment);
         values.add(value);
     }

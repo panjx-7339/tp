@@ -168,7 +168,8 @@ public class EditCommandTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditCommand(outOfBoundIndex, descriptor);
 
-        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(editCommand, model, Messages.MESSAGE_OUT_OF_BOUNDS_PERSON_INDEX
+                + "\nThere is/are only " + model.getFilteredPersonList().size() + " person(s) in the list.");
     }
 
     /**
@@ -185,7 +186,8 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(outOfBoundIndex,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
-        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(editCommand, model, Messages.MESSAGE_OUT_OF_BOUNDS_PERSON_INDEX
+                + "\nThere is/are only " + model.getFilteredPersonList().size() + " person(s) in the list.");
     }
 
     @Test
@@ -227,8 +229,9 @@ public class EditCommandTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditCommand(outOfBoundIndex, descriptor);
 
-        assertThrows(CommandException.class,
-                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, () -> editCommand.execute(model));
+        String expectedMessage = Messages.MESSAGE_OUT_OF_BOUNDS_PERSON_INDEX
+                + "\nThere is/are only " + model.getFilteredPersonList().size() + " person(s) in the list.";
+        assertThrows(CommandException.class, expectedMessage, () -> editCommand.execute(model));
         assertEquals(firstPerson, model.getSelectedPerson().getValue()); // unchanged
     }
 

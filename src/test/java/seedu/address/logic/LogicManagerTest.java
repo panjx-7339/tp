@@ -56,7 +56,8 @@ public class LogicManagerTest {
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
         String deleteCommand = "delete 9";
-        assertCommandException(deleteCommand, MESSAGE_OUT_OF_BOUNDS_PERSON_INDEX);
+        assertCommandException(deleteCommand, MESSAGE_OUT_OF_BOUNDS_PERSON_INDEX
+                + "\nThere is/are only 0 person(s) in the list.");
     }
 
     @Test

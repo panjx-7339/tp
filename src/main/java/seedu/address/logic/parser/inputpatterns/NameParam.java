@@ -2,6 +2,7 @@ package seedu.address.logic.parser.inputpatterns;
 
 import static seedu.address.logic.parser.CliSyntax.PARAM_ID_NAME;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Name;
 
 /**
@@ -19,8 +20,8 @@ public class NameParam extends Param {
     }
 
     @Override
-    boolean valueMatches(String value) {
-        return Name.isValidName(value);
+    boolean valueMatches(String value) throws IllegalValueException {
+        return Name.validateName(value);
     }
 }
 

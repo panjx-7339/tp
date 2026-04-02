@@ -2,6 +2,7 @@ package seedu.address.logic.parser.inputpatterns;
 
 import static seedu.address.logic.parser.CliSyntax.PARAM_ID_TAG_ADD;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -18,7 +19,7 @@ public class TagAddParam extends Param {
     }
 
     @Override
-    boolean valueMatches(String value) {
-        return Tag.isValidTagString(value);
+    boolean valueMatches(String value) throws IllegalValueException {
+        return Tag.validateTagString(value);
     }
 }

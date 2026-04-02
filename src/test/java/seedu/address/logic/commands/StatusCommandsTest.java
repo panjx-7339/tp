@@ -95,7 +95,8 @@ public class StatusCommandsTest {
     public void execute_outOfBoundsIndex_failure() {
         Model model = newModelWithPerson(ALICE_TARGET);
         ClearStatusCommand clearStatusCommand = new ClearStatusCommand(INDEX_SECOND_PERSON);
-        assertCommandFailure(clearStatusCommand, model, Messages.MESSAGE_OUT_OF_BOUNDS_PERSON_INDEX);
+        assertCommandFailure(clearStatusCommand, model, Messages.MESSAGE_OUT_OF_BOUNDS_PERSON_INDEX
+                + "\nThere is/are only " + model.getFilteredPersonList().size() + " person(s) in the list.");
     }
 
     @Test
@@ -114,8 +115,9 @@ public class StatusCommandsTest {
         model.setSelectedPerson(ALICE_TARGET);
         ClearStatusCommand clearStatusCommand = new ClearStatusCommand(INDEX_SECOND_PERSON);
 
-        assertThrows(CommandException.class,
-                Messages.MESSAGE_OUT_OF_BOUNDS_PERSON_INDEX, () -> clearStatusCommand.execute(model));
+        String expectedMessage = Messages.MESSAGE_OUT_OF_BOUNDS_PERSON_INDEX
+                + "\nThere is/are only " + model.getFilteredPersonList().size() + " person(s) in the list.";
+        assertThrows(CommandException.class, expectedMessage, () -> clearStatusCommand.execute(model));
         assertEquals(ALICE_TARGET, model.getSelectedPerson().getValue()); // unchanged
     }
 

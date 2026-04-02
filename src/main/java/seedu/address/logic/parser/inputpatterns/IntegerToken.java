@@ -1,10 +1,15 @@
 package seedu.address.logic.parser.inputpatterns;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+
 /**
  * A Token that takes in any integer
  * The range of valid integers are given by the Suppliers minValueSupplier and maxValueSupplier
  */
 public class IntegerToken extends Token {
+    public static final String INVALID_STRING =
+            " is not a valid integer (or it exceeds the representable range of ["
+            + Integer.MIN_VALUE + ", " + Integer.MAX_VALUE + "]).";
 
     private final int minValue;
     private final int maxValue;
@@ -33,20 +38,22 @@ public class IntegerToken extends Token {
     }
 
     @Override
-    public boolean matches(String segment) {
+    public boolean matches(String segment) throws IllegalValueException {
         try {
             int value = Integer.parseInt(segment);
 
             if (value < minValue) {
-                return false;
+                throw new IllegalValueException(segment
+                        + " is less than the minimum allowable value of " + minValue + ".");
             }
             if (value > maxValue) {
-                return false;
+                throw new IllegalValueException(segment
+                        + " is more than the maximum allowable value of " + maxValue + ".");
             }
 
             return true;
         } catch (NumberFormatException e) {
-            return false;
+            throw new IllegalValueException(segment + INVALID_STRING);
         }
     }
 

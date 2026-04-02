@@ -1,16 +1,17 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's name in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
+ * Guarantees: immutable; is valid as declared in {@link #validateName(String)}
  */
 public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Names should only contain alphanumeric characters and spaces, and it should not be blank.";
 
     /*
      * The first character of the address must not be a whitespace,
@@ -27,15 +28,23 @@ public class Name {
      */
     public Name(String name) {
         requireNonNull(name);
-        checkArgument(isValidName(name), MESSAGE_CONSTRAINTS);
+        try {
+            validateName(name);
+        } catch (IllegalValueException e) {
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
+        }
         fullName = name;
     }
 
     /**
      * Returns true if a given string is a valid name.
      */
-    public static boolean isValidName(String test) {
-        return test.matches(VALIDATION_REGEX);
+    public static boolean validateName(String test) throws IllegalValueException {
+        if (test.matches(VALIDATION_REGEX)) {
+            return true;
+        } else {
+            throw new IllegalValueException(test + " is not a valid name.\n" + MESSAGE_CONSTRAINTS);
+        }
     }
 
 

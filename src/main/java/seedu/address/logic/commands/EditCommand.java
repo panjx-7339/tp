@@ -64,7 +64,8 @@ public class EditCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_OUT_OF_BOUNDS_PERSON_INDEX
+                    + "\nThere is/are only " + lastShownList.size() + " person(s) in the list.");
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());

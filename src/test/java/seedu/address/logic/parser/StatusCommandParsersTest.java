@@ -1,6 +1,5 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -11,6 +10,7 @@ import seedu.address.logic.commands.ClearStatusCommand;
 import seedu.address.logic.commands.IgnoreStatusCommand;
 import seedu.address.logic.commands.ScamStatusCommand;
 import seedu.address.logic.commands.TargetStatusCommand;
+import seedu.address.logic.parser.inputpatterns.InputPattern;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for various StatusCommandParser.
@@ -23,22 +23,14 @@ public class StatusCommandParsersTest {
         ScamStatusCommandParser sParser = new ScamStatusCommandParser();
         IgnoreStatusCommandParser iParser = new IgnoreStatusCommandParser();
 
-        assertParseFailure(csParser, "",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ClearStatusCommand.MESSAGE_USAGE));
-        assertParseFailure(csParser, "1 1 1",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ClearStatusCommand.MESSAGE_USAGE));
-        assertParseFailure(tParser, "",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, TargetStatusCommand.MESSAGE_USAGE));
-        assertParseFailure(tParser, "1 1 1",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, TargetStatusCommand.MESSAGE_USAGE));
-        assertParseFailure(sParser, "",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScamStatusCommand.MESSAGE_USAGE));
-        assertParseFailure(sParser, "1 1 1",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScamStatusCommand.MESSAGE_USAGE));
-        assertParseFailure(iParser, "",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, IgnoreStatusCommand.MESSAGE_USAGE));
-        assertParseFailure(iParser, "1 1 1",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, IgnoreStatusCommand.MESSAGE_USAGE));
+        assertParseFailure(csParser, "", InputPattern.MESSAGE_TOO_FEW_FIELDS);
+        assertParseFailure(csParser, "1 1 1", InputPattern.MESSAGE_TOO_MANY_FIELDS);
+        assertParseFailure(tParser, "", InputPattern.MESSAGE_TOO_FEW_FIELDS);
+        assertParseFailure(tParser, "1 1 1", InputPattern.MESSAGE_TOO_MANY_FIELDS);
+        assertParseFailure(sParser, "", InputPattern.MESSAGE_TOO_FEW_FIELDS);
+        assertParseFailure(sParser, "1 1 1", InputPattern.MESSAGE_TOO_MANY_FIELDS);
+        assertParseFailure(iParser, "", InputPattern.MESSAGE_TOO_FEW_FIELDS);
+        assertParseFailure(iParser, "1 1 1", InputPattern.MESSAGE_TOO_MANY_FIELDS);
     }
 
     @Test

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -38,6 +39,8 @@ public class PersonCard extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView statusImage;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -46,7 +49,8 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
-        name.setText(person.getName().fullName + " " + person.getStatus().getStatusRepresentation());
+        name.setText(person.getName().fullName);
+        statusImage.setImage(person.getStatus().getStatusImage());
 
         if (person.hasPhone()) {
             phone.setText("phone: " + person.getPhone().value);
