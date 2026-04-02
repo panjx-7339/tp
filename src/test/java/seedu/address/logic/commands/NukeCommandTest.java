@@ -111,7 +111,7 @@ public class NukeCommandTest {
     }
 
     @Test
-    void deleteJar_URIException() throws Exception {
+    void deleteJar_uriException() throws Exception {
         NukeCommand command = new NukeCommand(() -> {
             throw new URISyntaxException("bad", "simulated");
         });

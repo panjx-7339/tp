@@ -36,6 +36,12 @@ public class NukeCommand extends Command {
 
     private final JarPathResolver jarPathResolver;
 
+    /**
+     * Default constructor for normal usage of NukeCommand.
+     *
+     * Initialises with JarPathResolver that finds the path
+     * of the current jar file being run.
+     */
     public NukeCommand() {
         this(() -> Paths.get(NukeCommand.class.getProtectionDomain()
                 .getCodeSource().getLocation().toURI()));
