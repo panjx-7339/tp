@@ -219,7 +219,7 @@ How the sort command works:
 3. `SortCommand` is created with the `SortSpec` and executed.
 4. During execution, `SortCommand` builds a `Comparator<Person>` based on the `SortSpec`.
 5. The comparator is applied to the view via `Model#updateSortedPersonList()`.
-6. If no filter is active, the master list is also sorted via `Model#sortMasterPersonList()` to persist the sort order.
+6. The `list` command resets both the filter and the sort order via `Model#resetSortedPersonList()`, restoring the original insertion order.
 
 #### Design considerations
 
@@ -229,11 +229,11 @@ How the sort command works:
     * Pros: Predictable behavior; missing data doesn't clutter results.
     * Cons: Less flexible for users who want nulls first.
 
-**Aspect: Two-layer sorting (view vs master):**
+**Aspect: View-only sorting:**
 
-* **Current choice:** Sort both the view (`SortedList`) and master list (`UniquePersonList`) when unfiltered; sort only the view when filtered.
-    * Pros: Sort order persists across sessions when unfiltered; filtered views don't affect master data.
-    * Cons: Slightly more complex logic to track filter state.
+* **Current choice:** Sort only affects the view layer (`SortedList`), not the underlying data.
+    * Pros: Original insertion order is preserved and can be restored with `list` command.
+    * Cons: Sort order does not persist across sessions.
 
 
 --------------------------------------------------------------------------------------------------------------------

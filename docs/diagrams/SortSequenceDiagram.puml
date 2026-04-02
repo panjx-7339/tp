@@ -59,16 +59,6 @@ activate Model
 Model --> SortCommand
 deactivate Model
 
-SortCommand -> Model : isFilteredViewActive()
-activate Model
-Model --> SortCommand : false
-deactivate Model
-
-SortCommand -> Model : sortMasterPersonList(comparator)
-activate Model
-Model --> SortCommand
-deactivate Model
-
 create CommandResult
 SortCommand -> CommandResult
 activate CommandResult
