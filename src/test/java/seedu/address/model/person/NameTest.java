@@ -40,6 +40,10 @@ public class NameTest {
         assertTrue(Name.validateName("peter the 2nd")); // alphanumeric characters
         assertTrue(Name.validateName("Capital Tan")); // with capital letters
         assertTrue(Name.validateName("David Roger Jackson Ray Jr 2nd")); // long names
+        assertTrue(Name.validateName("Jia` En")); // check for `
+        assertTrue(Name.validateName("Kong Kar Lok, Donald (Kong Jia Le)")); // check for , ()
+        assertTrue(Name.validateName("Davinder Singh Sachdev s/o Amar Singh")); // check for /
+        assertTrue(Name.validateName("George H.W. Bush")); // check for .
     }
 
     @Test
