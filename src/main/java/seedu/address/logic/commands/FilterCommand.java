@@ -66,7 +66,7 @@ public class FilterCommand extends Command {
      * Supports filtering by name, phone, email, status, and tag parameters.
      * If no criteria are provided (empty map), all profiles are shown.
      *
-     * @param paramFilters a map from filter type (NAME, PHONE, EMAIL, STATUS) to filter value
+     * @param paramFilters a map from filter type (NAME, PHONE, EMAIL, STATUS) to a list of filters
      * @param tagFilters a list of tag filters to filter by
      */
     public FilterCommand(Map<FilterType, List<String>> paramFilters, List<TagFilter> tagFilters) {
@@ -87,10 +87,19 @@ public class FilterCommand extends Command {
     }
 
     /**
-     * Builds a combined predicate from all filter criteria using AND logic.
-     * Supports filtering by name, phone, email, and status parameters.
+     * Builds the predicate used to filter persons for this command.
      *
-     * @return a predicate that combines all filter criteria
+     * Each non-empty filter category contributes one predicate, and these
+     * predicates are combined using AND logic.
+     *
+     * A person must satisfy every supplied category such as name, phone, email,
+     * status, and tags to be included.
+     *
+     * Empty or null filter lists are ignored. Invalid status values are skipped,
+     * and if no usable criteria are supplied, the returned predicate matches all
+     * persons.
+     *
+     * @return a predicate representing the active filter criteria
      */
     private Predicate<Person> buildPredicate() {
         Predicate<Person> predicate = PREDICATE_SHOW_ALL_PERSONS;
