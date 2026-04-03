@@ -400,6 +400,12 @@ Furthermore, certain edits can cause the ScamBook to behave in unexpected ways (
 </box>
 
 <!-- Upcoming features -->
+### Autoscroll
+- After making modifications to a contact, the app will scroll to and select the relevant contact. This behaviour
+occurs for these commands: `add`, `edit`, `tag`, `clearstatus`, `target`, `scam`, `ignore`.
+- For these commands, the app will scroll to and select the first contact in the address book: `filter`, `sort`, `list`.
+
+![Autoscroll example](images/AutoscrollExample.png)
 
 --------------------------------------------------------------------------------------------------------------------
 ## Future work
