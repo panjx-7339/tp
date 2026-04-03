@@ -9,6 +9,7 @@ public class CliSyntax {
     public static final String PARAM_ID_NAME = "--name";
     public static final String PARAM_ID_PHONE = "--phone";
     public static final String PARAM_ID_EMAIL = "--email";
+    public static final String PARAM_ID_STATUS = "--status";
     public static final String PARAM_ID_TAG = "--tag";
     public static final String PARAM_ID_TAG_ADD = "--add";
     public static final String PARAM_ID_TAG_EDIT = "--edit";

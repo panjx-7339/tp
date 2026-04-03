@@ -168,6 +168,11 @@ public class ModelManager implements Model {
         addressBook.sortPersons(comparator);
     }
 
+    @Override
+    public void resetSortedPersonList() {
+        sortedPersons.setComparator(null);
+    }
+
     //=========== Selected Person Accessors =============================================================
 
     public ObjectProperty<Person> getSelectedPerson() {

@@ -48,8 +48,9 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_unfiltered_sortsMasterList() throws CommandException {
+    public void execute_unfiltered_sortsViewOnly() throws CommandException {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        List<Person> masterBeforeSort = List.copyOf(model.getAddressBook().getPersonList());
 
         SortCommand.SortSpec spec = new SortCommand.SortSpec(
                 SortCommand.SortTargetType.NAME,
@@ -60,9 +61,10 @@ public class SortCommandTest {
         SortCommand command = new SortCommand(spec);
         command.execute(model);
 
-        List<Person> masterList = model.getAddressBook().getPersonList();
-        assertEquals("George Best", masterList.get(0).getName().fullName);
-        assertEquals("Alice Pauline", masterList.get(masterList.size() - 1).getName().fullName);
+        // View should be sorted
+        assertEquals("George Best", model.getFilteredPersonList().get(0).getName().fullName);
+        // Master list should remain unchanged
+        assertEquals(masterBeforeSort, model.getAddressBook().getPersonList());
     }
 
     @Test

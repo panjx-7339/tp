@@ -178,6 +178,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void resetSortedPersonList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ObjectProperty<Person> getSelectedPerson() {
             throw new AssertionError("This method should not be called.");
         }

@@ -7,7 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -27,6 +29,7 @@ public class NameContainsPredicateTest {
 
         // different types -> returns false
         assertNotEquals(1, firstPredicate);
+        assertFalse(firstPredicate.equals(new EmailContainsPredicate(Collections.singletonList("first"))));
 
         // null -> returns false
         assertNotEquals(null, firstPredicate);
@@ -41,16 +44,20 @@ public class NameContainsPredicateTest {
         NameContainsPredicate predicate = new NameContainsPredicate(Collections.singletonList("Alice"));
         assertTrue(predicate.test(ALICE));
 
+        // Partial substring
+        predicate = new NameContainsPredicate(Collections.singletonList("lic"));
+        assertTrue(predicate.test(ALICE));
+
         // Multiple keywords
-        predicate = new NameContainsPredicate(java.util.Arrays.asList("Alice", "Benson"));
+        predicate = new NameContainsPredicate(Arrays.asList("Alice", "Benson"));
         assertTrue(predicate.test(ALICE));
 
         // Only one matching keyword
-        predicate = new NameContainsPredicate(java.util.Arrays.asList("Benson", "Carol"));
+        predicate = new NameContainsPredicate(Arrays.asList("Benson", "Carol"));
         assertTrue(predicate.test(BENSON));
 
         // Mixed-case keywords
-        predicate = new NameContainsPredicate(java.util.Arrays.asList("aLIce", "bEnSoN"));
+        predicate = new NameContainsPredicate(Arrays.asList("aLIce", "bEnSoN"));
         assertTrue(predicate.test(ALICE));
     }
 
@@ -65,7 +72,20 @@ public class NameContainsPredicateTest {
         assertFalse(predicate.test(ALICE));
 
         // Keywords match phone, email and address, but does not match name
-        predicate = new NameContainsPredicate(java.util.Arrays.asList("12345", "alice@email.com", "Main", "Street"));
+        predicate = new NameContainsPredicate(Arrays.asList("12345", "alice@email.com", "Main", "Street"));
         assertFalse(predicate.test(ALICE));
+
+        // Multiple keywords with no substring match
+        predicate = new NameContainsPredicate(Arrays.asList("xyz", "nomatch"));
+        assertFalse(predicate.test(BENSON));
+    }
+
+    @Test
+    public void toStringMethod() {
+        List<String> keywords = List.of("Alice", "lic");
+        NameContainsPredicate predicate = new NameContainsPredicate(keywords);
+
+        String expected = NameContainsPredicate.class.getCanonicalName() + "{keywords=" + keywords + "}";
+        assertEquals(expected, predicate.toString());
     }
 }

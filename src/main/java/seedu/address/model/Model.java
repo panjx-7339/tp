@@ -107,6 +107,11 @@ public interface Model {
      */
     void sortMasterPersonList(Comparator<Person> comparator);
 
+    /**
+     * Resets the sorted person list to the original insertion order.
+     */
+    void resetSortedPersonList();
+
     /** Returns the {@code ObjectProperty} wrapping the currently selected {@code Person} */
     ObjectProperty<Person> getSelectedPerson();
 

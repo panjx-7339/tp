@@ -107,9 +107,6 @@ public class SortCommand extends Command {
         Comparator<Person> comparator = buildComparator(spec);
 
         model.updateSortedPersonList(comparator);
-        if (!model.isFilteredViewActive()) {
-            model.sortMasterPersonList(comparator);
-        }
 
         return new CommandResult(String.format("Sorted %d person(s).", model.getFilteredPersonList().size()));
     }
