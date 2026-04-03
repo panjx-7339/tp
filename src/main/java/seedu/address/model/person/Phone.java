@@ -10,10 +10,13 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Phone {
 
+    public static final int MIN_LENGTH = 3;
+    public static final int MAX_LENGTH = 20;
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Phone numbers should only contain numbers (no spaces!), and it should be at least 3 digits long.";
-    public static final String VALIDATION_REGEX = "\\d{3,}";
+            "Phone numbers should only contain numbers (no spaces!), and it should be "
+            + MIN_LENGTH + " to " + MAX_LENGTH + " digits long.";
+    public static final String VALIDATION_REGEX = "\\d{" + MIN_LENGTH + "," + MAX_LENGTH + "}";
     public final String value;
 
     /**

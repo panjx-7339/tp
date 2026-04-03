@@ -35,6 +35,12 @@ public class PhoneTest {
                     + Phone.MESSAGE_CONSTRAINTS, e.getMessage());
         }
 
+        // exceeds max length (21 digits)
+        String tooLongPhone = "123456789012345678901";
+        Exception e = assertThrows(IllegalValueException.class, () -> Phone.validatePhone(tooLongPhone));
+        assertEquals('"' + tooLongPhone + '"' + " is not a valid phone number.\n"
+                + Phone.MESSAGE_CONSTRAINTS, e.getMessage());
+
         // valid phone numbers
         assertTrue(Phone.validatePhone("911")); // exactly 3 numbers
         assertTrue(Phone.validatePhone("93121534"));
