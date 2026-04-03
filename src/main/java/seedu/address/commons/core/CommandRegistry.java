@@ -54,7 +54,7 @@ public class CommandRegistry {
                 TagCommand.EXAMPLE);
 
         register(FilterCommand.COMMAND_WORD,
-                "[--name NAME]... [--phone PHONE] [--email EMAIL] [--tag NAME:VALUE]...",
+                "[--name NAME]... [--phone PHONE]... [--email EMAIL]... [--status STATUS]... [--tag NAME:VALUE]...",
                 FilterCommand.EXAMPLE);
 
         register(SortCommand.COMMAND_WORD,

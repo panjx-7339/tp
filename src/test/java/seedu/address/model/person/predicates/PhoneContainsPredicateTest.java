@@ -11,18 +11,18 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.testutil.PersonBuilder;
 
-public class PhoneEqualsPredicateTest {
+public class PhoneContainsPredicateTest {
 
     @Test
     public void equals() {
-        PhoneEqualsPredicate firstPredicate = new PhoneEqualsPredicate(List.of("12345678"));
-        PhoneEqualsPredicate secondPredicate = new PhoneEqualsPredicate(List.of("87654321"));
+        PhoneContainsPredicate firstPredicate = new PhoneContainsPredicate(List.of("12345678"));
+        PhoneContainsPredicate secondPredicate = new PhoneContainsPredicate(List.of("87654321"));
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        PhoneEqualsPredicate firstPredicateCopy = new PhoneEqualsPredicate(List.of("12345678"));
+        PhoneContainsPredicate firstPredicateCopy = new PhoneContainsPredicate(List.of("12345678"));
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -37,16 +37,19 @@ public class PhoneEqualsPredicateTest {
 
     @Test
     public void test_phoneMatches_returnsTrue() {
-        PhoneEqualsPredicate predicate = new PhoneEqualsPredicate(List.of("12345678"));
+        PhoneContainsPredicate predicate = new PhoneContainsPredicate(List.of("12345678"));
         assertTrue(predicate.test(new PersonBuilder().withPhone("12345678").build()));
 
-        predicate = new PhoneEqualsPredicate(Arrays.asList("00000000", "12345678"));
+        predicate = new PhoneContainsPredicate(List.of("3456"));
+        assertTrue(predicate.test(new PersonBuilder().withPhone("12345678").build()));
+
+        predicate = new PhoneContainsPredicate(Arrays.asList("00000000", "3456"));
         assertTrue(predicate.test(new PersonBuilder().withPhone("12345678").build()));
     }
 
     @Test
     public void test_phoneDoesNotMatch_returnsFalse() {
-        PhoneEqualsPredicate predicate = new PhoneEqualsPredicate(List.of("12345678"));
+        PhoneContainsPredicate predicate = new PhoneContainsPredicate(List.of("9999"));
 
         // Different phone
         assertFalse(predicate.test(new PersonBuilder().withPhone("87654321").build()));
@@ -57,8 +60,8 @@ public class PhoneEqualsPredicateTest {
 
     @Test
     public void toStringMethod() {
-        PhoneEqualsPredicate predicate = new PhoneEqualsPredicate(List.of("12345678"));
-        String expected = PhoneEqualsPredicate.class.getCanonicalName() + "{phone=[12345678]}";
+        PhoneContainsPredicate predicate = new PhoneContainsPredicate(List.of("12345678"));
+        String expected = PhoneContainsPredicate.class.getCanonicalName() + "{phoneSubstrings=[12345678]}";
         assertEquals(expected, predicate.toString());
     }
 }

@@ -32,6 +32,7 @@ public class EmailContainsPredicateTest {
 
         // different types -> returns false
         assertNotEquals(1, firstPredicate);
+        assertFalse(firstPredicate.equals(new NameContainsPredicate(Collections.singletonList("alice"))));
 
         // null -> returns false
         assertNotEquals(null, firstPredicate);
@@ -66,6 +67,10 @@ public class EmailContainsPredicateTest {
         // Keyword matches middle of email
         predicate = new EmailContainsPredicate(Collections.singletonList("@e"));
         assertTrue(predicate.test(new PersonBuilder().withEmail("alice@email.com").build()));
+
+        // Mixed-case email still matches because comparison is case-insensitive
+        predicate = new EmailContainsPredicate(Collections.singletonList("alice"));
+        assertTrue(predicate.test(new PersonBuilder().withEmail("ALICE@EMAIL.COM").build()));
     }
 
     @Test
@@ -92,6 +97,10 @@ public class EmailContainsPredicateTest {
 
         // Partial match doesn't exist
         predicate = new EmailContainsPredicate(Collections.singletonList("xyz"));
+        assertFalse(predicate.test(new PersonBuilder().withEmail("alice@email.com").build()));
+
+        // Blank-ish mismatch still returns false when email is present
+        predicate = new EmailContainsPredicate(Collections.singletonList(" "));
         assertFalse(predicate.test(new PersonBuilder().withEmail("alice@email.com").build()));
     }
 

@@ -1,7 +1,9 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -26,15 +28,17 @@ import seedu.address.logic.commands.FilterCommand.FilterType;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Status;
 import seedu.address.model.person.predicates.EmailContainsPredicate;
-import seedu.address.model.person.predicates.NameContainsKeywordsPredicate;
-import seedu.address.model.person.predicates.PhoneEqualsPredicate;
+import seedu.address.model.person.predicates.NameContainsPredicate;
+import seedu.address.model.person.predicates.PhoneContainsPredicate;
+import seedu.address.model.person.predicates.StatusEqualsPredicate;
 import seedu.address.model.person.predicates.TagContainsPredicate;
 import seedu.address.model.tag.Tag;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for FilterCommand.
- * Tests cover all filter types (name, phone, email, tag), their combinations, and edge cases.
+ * Tests cover all filter types (name, phone, email, status, tag), their combinations, and edge cases.
  */
 public class FilterCommandTest {
 
@@ -75,6 +79,21 @@ public class FilterCommandTest {
     }
 
     @Test
+    public void constructor_nullParamFilters_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new FilterCommand(null, Collections.emptyList()));
+    }
+
+    @Test
+    public void constructor_nullTagFilters_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new FilterCommand(new HashMap<>(), null));
+    }
+
+    @Test
+    public void constructor_emptyFilters_doesNotThrow() {
+        assertDoesNotThrow(() -> new FilterCommand(new HashMap<>(), Collections.emptyList()));
+    }
+
+    @Test
     public void execute_noCriteria_showsAll() {
         FilterCommand command = createFilterCommand(new HashMap<>(), Collections.emptyList());
         assertFilterResult(command, model, Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
@@ -88,11 +107,19 @@ public class FilterCommandTest {
     }
 
     @Test
+    public void execute_nullNameCriteria_showsAll() {
+        Map<FilterType, List<String>> criteria = new HashMap<>();
+        criteria.put(FilterType.NAME, null);
+        FilterCommand command = createFilterCommand(criteria, Collections.emptyList());
+        assertFilterResult(command, model, Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    @Test
     public void execute_singleNameCriteria_filtersCorrectly() {
         FilterCommand command = createFilterCommand(singleParamFilter(FilterType.NAME, "Alice"),
                 Collections.emptyList());
 
-        expectedModel.updateFilteredPersonList(new NameContainsKeywordsPredicate(List.of("Alice")));
+        expectedModel.updateFilteredPersonList(new NameContainsPredicate(List.of("Alice")));
         assertFilterResult(command, model, List.of(ALICE));
     }
 
@@ -102,7 +129,7 @@ public class FilterCommandTest {
                 Collections.emptyList());
 
         expectedModel.updateFilteredPersonList(
-                new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Benson")));
+                new NameContainsPredicate(Arrays.asList("Alice", "Benson")));
         assertFilterResult(command, model, Arrays.asList(ALICE, BENSON));
     }
 
@@ -111,7 +138,7 @@ public class FilterCommandTest {
         FilterCommand command = createFilterCommand(singleParamFilter(FilterType.NAME, "Nonexistent"),
                 Collections.emptyList());
 
-        expectedModel.updateFilteredPersonList(new NameContainsKeywordsPredicate(List.of("Nonexistent")));
+        expectedModel.updateFilteredPersonList(new NameContainsPredicate(List.of("Nonexistent")));
         assertFilterResult(command, model, Collections.emptyList());
     }
 
@@ -120,7 +147,7 @@ public class FilterCommandTest {
         FilterCommand command = createFilterCommand(singleParamFilter(FilterType.NAME, "Meier"),
                 Collections.emptyList());
 
-        expectedModel.updateFilteredPersonList(new NameContainsKeywordsPredicate(List.of("Meier")));
+        expectedModel.updateFilteredPersonList(new NameContainsPredicate(List.of("Meier")));
         assertFilterResult(command, model, Arrays.asList(BENSON, DANIEL));
     }
 
@@ -129,8 +156,32 @@ public class FilterCommandTest {
         FilterCommand command = createFilterCommand(singleParamFilter(FilterType.PHONE, "94351253"),
                 Collections.emptyList());
 
-        expectedModel.updateFilteredPersonList(new PhoneEqualsPredicate(List.of("94351253")));
+        expectedModel.updateFilteredPersonList(new PhoneContainsPredicate(List.of("94351253")));
         assertFilterResult(command, model, List.of(ALICE));
+    }
+
+    @Test
+    public void execute_partialPhoneCriteria_filtersCorrectly() {
+        FilterCommand command = createFilterCommand(singleParamFilter(FilterType.PHONE, "3512"),
+                Collections.emptyList());
+
+        expectedModel.updateFilteredPersonList(new PhoneContainsPredicate(List.of("3512")));
+        assertFilterResult(command, model, List.of(ALICE));
+    }
+
+    @Test
+    public void execute_emptyPhoneCriteria_showsAll() {
+        Map<FilterType, List<String>> criteria = singleParamFilter(FilterType.PHONE);
+        FilterCommand command = createFilterCommand(criteria, Collections.emptyList());
+        assertFilterResult(command, model, Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    @Test
+    public void execute_nullPhoneCriteria_showsAll() {
+        Map<FilterType, List<String>> criteria = new HashMap<>();
+        criteria.put(FilterType.PHONE, null);
+        FilterCommand command = createFilterCommand(criteria, Collections.emptyList());
+        assertFilterResult(command, model, Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 
     @Test
@@ -138,7 +189,7 @@ public class FilterCommandTest {
         FilterCommand command = createFilterCommand(singleParamFilter(FilterType.PHONE, "94351253", "98765432"),
                 Collections.emptyList());
 
-        expectedModel.updateFilteredPersonList(new PhoneEqualsPredicate(Arrays.asList("94351253", "98765432")));
+        expectedModel.updateFilteredPersonList(new PhoneContainsPredicate(Arrays.asList("94351253", "98765432")));
         assertFilterResult(command, model, Arrays.asList(ALICE, BENSON));
     }
 
@@ -147,7 +198,7 @@ public class FilterCommandTest {
         FilterCommand command = createFilterCommand(singleParamFilter(FilterType.PHONE, "99999999"),
                 Collections.emptyList());
 
-        expectedModel.updateFilteredPersonList(new PhoneEqualsPredicate(List.of("99999999")));
+        expectedModel.updateFilteredPersonList(new PhoneContainsPredicate(List.of("99999999")));
         assertFilterResult(command, model, Collections.emptyList());
     }
 
@@ -158,6 +209,98 @@ public class FilterCommandTest {
 
         expectedModel.updateFilteredPersonList(new EmailContainsPredicate(List.of("alice@example.com")));
         assertFilterResult(command, model, List.of(ALICE));
+    }
+
+    @Test
+    public void execute_partialEmailCriteria_filtersCorrectly() {
+        FilterCommand command = createFilterCommand(singleParamFilter(FilterType.EMAIL, "@example"),
+                Collections.emptyList());
+
+        expectedModel.updateFilteredPersonList(new EmailContainsPredicate(List.of("@example")));
+        assertFilterResult(command, model, Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    @Test
+    public void execute_emptyEmailCriteria_showsAll() {
+        Map<FilterType, List<String>> criteria = singleParamFilter(FilterType.EMAIL);
+        FilterCommand command = createFilterCommand(criteria, Collections.emptyList());
+        assertFilterResult(command, model, Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    @Test
+    public void execute_nullEmailCriteria_showsAll() {
+        Map<FilterType, List<String>> criteria = new HashMap<>();
+        criteria.put(FilterType.EMAIL, null);
+        FilterCommand command = createFilterCommand(criteria, Collections.emptyList());
+        assertFilterResult(command, model, Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    @Test
+    public void execute_singleStatusCriteria_filtersCorrectly() {
+        FilterCommand command = createFilterCommand(singleParamFilter(FilterType.STATUS, "TARGET"),
+                Collections.emptyList());
+
+        expectedModel.updateFilteredPersonList(new StatusEqualsPredicate(List.of(Status.TARGET)));
+        assertFilterResult(command, model, List.of(ALICE));
+    }
+
+    @Test
+    public void execute_emptyStatusCriteria_showsAll() {
+        Map<FilterType, List<String>> criteria = singleParamFilter(FilterType.STATUS);
+        FilterCommand command = createFilterCommand(criteria, Collections.emptyList());
+        assertFilterResult(command, model, Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    @Test
+    public void execute_nullStatusCriteria_showsAll() {
+        Map<FilterType, List<String>> criteria = new HashMap<>();
+        criteria.put(FilterType.STATUS, null);
+        FilterCommand command = createFilterCommand(criteria, Collections.emptyList());
+        assertFilterResult(command, model, Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    @Test
+    public void execute_invalidStatusCriteria_doesNotCrash() {
+        FilterCommand command = createFilterCommand(singleParamFilter(FilterType.STATUS, "not-a-status"),
+                Collections.emptyList());
+
+        assertDoesNotThrow(() -> command.execute(model));
+    }
+
+    @Test
+    public void execute_invalidAndValidStatusCriteria_filtersUsingValidStatusOnly() {
+        FilterCommand command = createFilterCommand(singleParamFilter(FilterType.STATUS, "TARGET", "not-a-status"),
+                Collections.emptyList());
+
+        expectedModel.updateFilteredPersonList(new StatusEqualsPredicate(Arrays.asList(Status.TARGET, null)));
+        assertFilterResult(command, model, List.of(ALICE));
+    }
+
+    @Test
+    public void execute_onlyInvalidStatusCriteria_returnsEmptyList() {
+        FilterCommand command = createFilterCommand(singleParamFilter(FilterType.STATUS, "not-a-status"),
+                Collections.emptyList());
+
+        expectedModel.updateFilteredPersonList(new StatusEqualsPredicate(Collections.singletonList(null)));
+        assertFilterResult(command, model, Collections.emptyList());
+    }
+
+    @Test
+    public void execute_multipleStatusCriteria_filtersMatching() {
+        FilterCommand command = createFilterCommand(singleParamFilter(FilterType.STATUS, "TARGET", "IGNORE"),
+                Collections.emptyList());
+
+        expectedModel.updateFilteredPersonList(new StatusEqualsPredicate(List.of(Status.TARGET, Status.IGNORE)));
+        assertFilterResult(command, model, Arrays.asList(ALICE, CARL));
+    }
+
+    @Test
+    public void execute_statusMatchesNoOne_emptyList() {
+        FilterCommand command = createFilterCommand(singleParamFilter(FilterType.STATUS, "NONE"),
+                Collections.emptyList());
+
+        expectedModel.updateFilteredPersonList(new StatusEqualsPredicate(List.of(Status.NONE)));
+        assertFilterResult(command, model, Arrays.asList(DANIEL, ELLE, FIONA, GEORGE));
     }
 
     @Test
@@ -226,8 +369,8 @@ public class FilterCommandTest {
         FilterCommand command = createFilterCommand(criteria, Collections.emptyList());
 
         expectedModel.updateFilteredPersonList(
-                new NameContainsKeywordsPredicate(List.of("Meier"))
-                        .and(new PhoneEqualsPredicate(List.of("98765432"))));
+                new NameContainsPredicate(List.of("Meier"))
+                        .and(new PhoneContainsPredicate(List.of("98765432"))));
         assertFilterResult(command, model, List.of(BENSON));
     }
 
@@ -239,7 +382,7 @@ public class FilterCommandTest {
         FilterCommand command = createFilterCommand(criteria, Collections.emptyList());
 
         expectedModel.updateFilteredPersonList(
-                new NameContainsKeywordsPredicate(List.of("Alice"))
+                new NameContainsPredicate(List.of("Alice"))
                         .and(new EmailContainsPredicate(List.of("alice@example.com"))));
         assertFilterResult(command, model, List.of(ALICE));
     }
@@ -258,6 +401,19 @@ public class FilterCommandTest {
     }
 
     @Test
+    public void execute_statusAndEmailCriteria_filtersByBoth() {
+        Map<FilterType, List<String>> criteria = new HashMap<>();
+        criteria.put(FilterType.STATUS, List.of("SCAM"));
+        criteria.put(FilterType.EMAIL, List.of("johnd@example.com"));
+        FilterCommand command = createFilterCommand(criteria, Collections.emptyList());
+
+        expectedModel.updateFilteredPersonList(
+                new StatusEqualsPredicate(List.of(Status.SCAM))
+                        .and(new EmailContainsPredicate(List.of("johnd@example.com"))));
+        assertFilterResult(command, model, List.of(BENSON));
+    }
+
+    @Test
     public void execute_namePhoneEmailTagCriteria_filtersByAll() {
         Map<FilterType, List<String>> criteria = new HashMap<>();
         criteria.put(FilterType.NAME, List.of("Benson"));
@@ -267,8 +423,8 @@ public class FilterCommandTest {
         FilterCommand command = createFilterCommand(criteria, tagFilters);
 
         expectedModel.updateFilteredPersonList(
-                new NameContainsKeywordsPredicate(List.of("Benson"))
-                        .and(new PhoneEqualsPredicate(List.of("98765432")))
+                new NameContainsPredicate(List.of("Benson"))
+                        .and(new PhoneContainsPredicate(List.of("98765432")))
                         .and(new EmailContainsPredicate(List.of("johnd@example.com")))
                         .and(new TagContainsPredicate(tagFilters)));
         assertFilterResult(command, model, List.of(BENSON));
@@ -282,8 +438,8 @@ public class FilterCommandTest {
         FilterCommand command = createFilterCommand(criteria, Collections.emptyList());
 
         expectedModel.updateFilteredPersonList(
-                new NameContainsKeywordsPredicate(List.of("Alice"))
-                        .and(new PhoneEqualsPredicate(List.of("98765432"))));
+                new NameContainsPredicate(List.of("Alice"))
+                        .and(new PhoneContainsPredicate(List.of("98765432"))));
         assertFilterResult(command, model, Collections.emptyList());
     }
 
@@ -295,7 +451,7 @@ public class FilterCommandTest {
         FilterCommand command = createFilterCommand(criteria, Collections.emptyList());
 
         expectedModel.updateFilteredPersonList(
-                new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Benson"))
+                new NameContainsPredicate(Arrays.asList("Alice", "Benson"))
                         .and(new EmailContainsPredicate(Arrays.asList("alice@example.com", "johnd@example.com"))));
         assertFilterResult(command, model, Arrays.asList(ALICE, BENSON));
     }
