@@ -2,10 +2,12 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -83,6 +85,56 @@ public class SortCommandTest {
 
         assertEquals(Arrays.asList(DANIEL, BENSON), model.getFilteredPersonList());
         assertEquals(masterBeforeSort, model.getAddressBook().getPersonList());
+    }
+
+    @Test
+    public void execute_unfiltered_selectsCorrectPerson() throws CommandException {
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+        SortCommand.SortSpec spec = new SortCommand.SortSpec(
+                SortCommand.SortTargetType.NAME,
+                null,
+                SortCommand.SortOrder.DESC,
+                SortCommand.SortMode.ALPHA
+        );
+        SortCommand command = new SortCommand(spec);
+        command.execute(model);
+
+        assertEquals(GEORGE, model.getSelectedPerson().getValue());
+    }
+
+    @Test
+    public void execute_emptyFilteredList_selectedPersonIsNull() throws CommandException {
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList("None")));
+
+        SortCommand.SortSpec spec = new SortCommand.SortSpec(
+                SortCommand.SortTargetType.NAME,
+                null,
+                SortCommand.SortOrder.ASC,
+                SortCommand.SortMode.ALPHA
+        );
+        SortCommand command = new SortCommand(spec);
+        command.execute(model);
+
+        assertNull(model.getSelectedPerson().getValue());
+    }
+
+    @Test
+    public void execute_nonEmptyFilteredList_selectsCorrectPerson() throws CommandException {
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList("Meier")));
+
+        SortCommand.SortSpec spec = new SortCommand.SortSpec(
+                SortCommand.SortTargetType.NAME,
+                null,
+                SortCommand.SortOrder.ASC,
+                SortCommand.SortMode.ALPHA
+        );
+        SortCommand command = new SortCommand(spec);
+        command.execute(model);
+
+        assertEquals(BENSON, model.getSelectedPerson().getValue());
     }
 
     @Test

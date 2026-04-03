@@ -9,7 +9,10 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
+import seedu.address.MainApp;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -42,6 +45,7 @@ public class FilterCommand extends Command {
     }
     private final Map<FilterType, List<String>> paramFilters;
     private final List<Tag> tagFilters;
+    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
     /**
      * Creates a FilterCommand with the given filter criteria.
@@ -66,7 +70,11 @@ public class FilterCommand extends Command {
         Predicate<Person> combinedPredicate = buildPredicate();
         model.updateFilteredPersonList(combinedPredicate);
         // Scroll to and select first person in list
-        model.setSelectedPerson(model.getFilteredPersonList().get(0));
+        if (model.getFilteredPersonList().isEmpty()) {
+            model.setSelectedPerson(null);
+        } else {
+            model.setSelectedPerson(model.getFilteredPersonList().get(0));
+        }
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

@@ -107,7 +107,11 @@ public class SortCommand extends Command {
             model.sortMasterPersonList(comparator);
         }
         // Scroll to and select first person in list
-        model.setSelectedPerson(model.getFilteredPersonList().get(0));
+        if (model.getFilteredPersonList().isEmpty()) {
+            model.setSelectedPerson(null);
+        } else {
+            model.setSelectedPerson(model.getFilteredPersonList().get(0));
+        }
         return new CommandResult(String.format("Sorted %d person(s).", model.getFilteredPersonList().size()));
     }
 

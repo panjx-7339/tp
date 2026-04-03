@@ -19,7 +19,11 @@ public class ListCommand extends Command {
         requireNonNull(model);
         model.showAllPersons();
         // Scroll to and select first person in list
-        model.setSelectedPerson(model.getFilteredPersonList().get(0));
+        if (model.getFilteredPersonList().isEmpty()) {
+            model.setSelectedPerson(null);
+        } else {
+            model.setSelectedPerson(model.getFilteredPersonList().get(0));
+        }
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
