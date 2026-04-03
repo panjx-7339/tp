@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import java.util.Arrays;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FilterCommand.FilterType;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagFilter;
 
 /**
  * Contains unit tests for FilterCommandParser.
@@ -28,7 +30,7 @@ public class FilterCommandParserTest {
      * Creates an expected FilterCommand with parameter filters and tag filters.
      */
     private FilterCommand createExpectedFilterCommand(Map<FilterType, List<String>> paramFilters,
-                                                      List<Tag> tagFilters) {
+                                                      List<TagFilter> tagFilters) {
         return new FilterCommand(paramFilters, tagFilters);
     }
 
@@ -139,22 +141,36 @@ public class FilterCommandParserTest {
     @Test
     public void parse_singleTagCriteria_returnsFilterCommand() throws Exception {
         FilterCommand expected = createExpectedFilterCommand(new HashMap<>(),
-                List.of(new Tag("job:manager")));
+                List.of(new TagFilter("job:manager")));
         assertParseSuccess(parser, " --tag job:manager", expected);
     }
 
     @Test
     public void parse_multipleTagCriteria_returnsFilterCommand() throws Exception {
         FilterCommand expected = createExpectedFilterCommand(new HashMap<>(),
-                Arrays.asList(new Tag("job:manager"), new Tag("rich:yes")));
+                Arrays.asList(new TagFilter("job:manager"), new TagFilter("rich:yes")));
         assertParseSuccess(parser, " --tag job:manager --tag rich:yes", expected);
     }
 
     @Test
     public void parse_tagWithColonDelimiter_returnsFilterCommand() throws Exception {
         FilterCommand expected = createExpectedFilterCommand(new HashMap<>(),
-                List.of(new Tag("income:$100,000")));
+                List.of(new TagFilter("income:$100,000")));
         assertParseSuccess(parser, " --tag income:$100,000", expected);
+    }
+
+    @Test
+    public void parse_tagNameOnly_returnsFilterCommand() throws Exception {
+        FilterCommand expected = createExpectedFilterCommand(new HashMap<>(),
+                List.of(new TagFilter("job")));
+        assertParseSuccess(parser, " --tag job", expected);
+    }
+
+    @Test
+    public void parse_mixedTagCriteria_returnsFilterCommand() throws Exception {
+        FilterCommand expected = createExpectedFilterCommand(new HashMap<>(),
+                Arrays.asList(new TagFilter("job"), new TagFilter("rich:yes")));
+        assertParseSuccess(parser, " --tag job --tag rich:yes", expected);
     }
 
     @Test
@@ -189,7 +205,7 @@ public class FilterCommandParserTest {
     public void parse_nameAndTagCriteria_returnsFilterCommand() throws Exception {
         Map<FilterType, List<String>> criteria = new HashMap<>();
         criteria.put(FilterType.NAME, List.of("Benson"));
-        List<Tag> tags = List.of(new Tag("job:manager"));
+        List<TagFilter> tags = List.of(new TagFilter("job:manager"));
         FilterCommand expected = createExpectedFilterCommand(criteria, tags);
         assertParseSuccess(parser, " --name Benson --tag job:manager", expected);
     }
@@ -199,7 +215,7 @@ public class FilterCommandParserTest {
         Map<FilterType, List<String>> criteria = new HashMap<>();
         criteria.put(FilterType.PHONE, List.of("98765432"));
         criteria.put(FilterType.EMAIL, List.of("johnd@example.com"));
-        List<Tag> tags = List.of(new Tag("rich:yes"));
+        List<TagFilter> tags = List.of(new TagFilter("rich:yes"));
         FilterCommand expected = createExpectedFilterCommand(criteria, tags);
         assertParseSuccess(parser, " --phone 98765432 --email johnd@example.com --tag rich:yes", expected);
     }
@@ -211,7 +227,7 @@ public class FilterCommandParserTest {
         criteria.put(FilterType.PHONE, Arrays.asList("94351253", "98765432"));
         criteria.put(FilterType.EMAIL, Arrays.asList("alice@example.com", "johnd@example.com"));
         criteria.put(FilterType.STATUS, Arrays.asList("TARGET", "SCAM"));
-        List<Tag> tags = Arrays.asList(new Tag("job:manager"), new Tag("rich:yes"));
+        List<TagFilter> tags = Arrays.asList(new TagFilter("job:manager"), new TagFilter("rich:yes"));
         FilterCommand expected = createExpectedFilterCommand(criteria, tags);
         assertParseSuccess(parser,
                 " --name Alice --name Benson"
@@ -224,8 +240,13 @@ public class FilterCommandParserTest {
 
     @Test
     public void parse_allFilterTypesTagsOnly_returnsFilterCommand() throws Exception {
-        List<Tag> tags = Arrays.asList(new Tag("job:manager"), new Tag("income:$100,000"));
+        List<TagFilter> tags = Arrays.asList(new TagFilter("job:manager"), new TagFilter("income:$100,000"));
         FilterCommand expected = createExpectedFilterCommand(new HashMap<>(), tags);
         assertParseSuccess(parser, " --tag job:manager --tag income:$100,000", expected);
+    }
+
+    @Test
+    public void parse_invalidTagNameOnly_throwsParseException() {
+        assertParseFailure(parser, " --tag name", Tag.ILLEGAL_NAME_CONSTRAINTS);
     }
 }
