@@ -110,7 +110,6 @@ public class InputPattern {
         String paramArgs = args.substring(tokenParamSplitPoint).strip();
 
         /// Settle the tokenArgs
-
         ArrayList<String> combinedSegments = getCombinedSegments(tokenArgs);
 
         if (combinedSegments.size() < this.tokens.size()) {

@@ -64,7 +64,7 @@ public abstract class Param extends Token {
      */
     public boolean idMatches(String segment) {
         String strippedSegment = segment.strip();
-        return strippedSegment.matches(getId() + ".*");
+        return strippedSegment.matches(getId() + " .*") || (strippedSegment.equals(getId()));
     }
 
     String getValueFromSegment(String segment) {
