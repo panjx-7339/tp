@@ -55,9 +55,11 @@ refer to [troubleshooting](#troubleshooting) for alternate ways to launch the ap
 ### Overview
 A GUI similar to the below should appear in a few seconds. The app contains some sample data for you to use.<br>
 
-![Ui](images/Ui.png) 
-<small>*<center>Image credits for status icons: Downloaded from https://emoji.aranja.com/.</center>*</small>
-
+![Ui](images/Ui.png)
+<div style="text-align: center; font-style: italic">
+    <small>Image credits for status icons: Downloaded from https://emoji.aranja.com/.</small>
+</div>
+<br>
 The top part of the application is the contact list - you can view contacts there.
 
 The box at the bottom that reads "Enter command here..." is where you enter commands. This is where you get to interact with ScamBook!
