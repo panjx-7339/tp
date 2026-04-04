@@ -249,6 +249,8 @@ How the sort command works:
 
 ## **Appendix: Requirements**
 
+<br>
+
 ### Product scope
 
 **Target user profile**:
@@ -267,6 +269,8 @@ Phone-call based scam caller who
 * Single-user application for security and anonymity
 * Full data wipe in case of emergency situations
 
+
+<br>
 
 ### User stories
 
@@ -300,6 +304,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * ^`  | security-conscious scam caller | require logging in for the app                                                               | sensitive data is protected and secure                                           |
 | `*`      | scam caller                    | purge data immediately                                                                       | I can wipe my hard disk if I get raided by the police                            |
 | `* ^`    | new user                       | follow a tutorial                                                                            | I am guided through the onboarding process                                       |
+
+<br>
 
 ### Use cases
 
@@ -418,6 +424,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
+<br>
+
 ### Non-Functional Requirements
 
 1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
@@ -426,6 +434,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
    able to accomplish most of the tasks faster using commands than using the mouse.
 4. Should be fully functional without an internet connection.
 5. Should accept only ASCII characters in user input, and display all stored information in ASCII characters.
+
+<br>
 
 ### Glossary
 
@@ -471,3 +481,9 @@ Please follow the setup instructions in the [user guide](UserGuide.html#installa
 <br>
 
 ## **Appendix: Planned enhancements**
+
+Team size: 5 people
+
+1. **Improve code quality for `sort` command:** The sort command parser does not use the existing `InputPattern` system used by all other commands that have any arguments, as it has somewhat distinct syntax. For improving code quality, we plan to make `InputPattern` more flexible to accommodate the `sort` command's syntax, and future commands that may have more varied syntax.
+
+2. **Allow `edit` command to clear name, phone and email fields:** Currently, the `edit` command requires the edited name, phone, or email to be another valid email, and the empty string is always invalid. However, there may be use cases when the user wishes to mark one of name, phone or email as null or empty. We plan to add this functionality, for example by allowing users to input `--phone ""` to clear the phone field.

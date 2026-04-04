@@ -1,7 +1,7 @@
 ---
   layout: default.md
-    title: "User Guide"
-    pageNav: 3
+  title: "User Guide"
+  pageNav: 3
 ---
 
 ScamBook User Guide
@@ -336,6 +336,7 @@ Examples:
 * `scam 3` marks the third person to have been scammed.
 * `ignore 4` marks the fourth person to be ignored (e.g. if you think the fourth person is unlikely to be a victim and you should not pursue this further).
 
+<br>
 
 ### Listing all persons : `list`
 
@@ -343,6 +344,7 @@ Shows a list of ALL persons in the ScamBook. This command can be used after `sor
 
 Format: `list`
 
+<br>
 
 ### Clearing all persons : `clear`
 
@@ -387,6 +389,9 @@ Exits the program.
 
 Format: `exit`
 
+
+--------------------------------------------------------------------
+
 ### Constraints on input values
 
 #### Name Constraints
@@ -411,6 +416,8 @@ Emails should be of the format `local-part@domain` and adhere to the following c
 
 <br>
 
+---------------------------------------------------
+
 ### Saving the data
 
 ScamBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
@@ -429,7 +436,7 @@ Furthermore, certain edits can cause the ScamBook to behave in unexpected ways (
 </box>
 
 
-
+----------------------------------------------------------------------
 
 ## FAQ
 
