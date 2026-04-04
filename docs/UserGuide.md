@@ -314,9 +314,7 @@ Sets the status of a specific person. We currently support 4 common statuses, ea
 
 ![Example screenshot of status commands](images/status_command.png)
 
-![StatusDiagram.png](images/StatusDiagram.png)
-
-In the above image, the people have the status of `scam`, `ignore`, `target` and no status respectively.
+In the above image, the people have the status of no status, `target`, `scam`, `ignore` and  respectively.
 
 * `status_command` should be replaced by either one of `clearstatus`, `target`, `scam`, or `ignore`.
 * Sets the status of the person at the specified `INDEX`.
@@ -325,10 +323,10 @@ In the above image, the people have the status of `scam`, `ignore`, `target` and
 
 
 Examples:
-* `scam 2` marks the second person to have been scammed.
-* `ignore 4` marks the fourth person to be ignored (e.g. if you think the fourth person is unlikely to be a victim and you should not pursue this further).
-* `target 3` marks the third person as a potential target.
 * `clearstatus 1` clears the first person of any indicated status.
+* `target 2` marks the second person as a potential target.
+* `scam 3` marks the fourth person to have been scammed.
+* `ignore 4` marks the third person to be ignored (e.g. if you think the third person is unlikely to be a victim and you should not pursue this further).
 
 
 ### Listing all persons : `list`
@@ -492,15 +490,15 @@ command output -->
 | Command           | Functionality and Parameters                                                                                                                                                                 |
 |-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **`add`**         | Adds a new person<br>`NAME [--phone PHONE] [--email EMAIL] [--tag NAME:VALUE]...`<br> e.g., `add John Doe --phone 98765432 --email jognd@example.com --tag school:NUS`                       |
-| **`tag`**         | Updates tags of an existing person<br>`INDEX [--add NAME:VALUE]... [--edit NAME:VALUE]... [--delete TAGNAME]...`<br> e.g., `tag 1 --add school:NUS --edit salary:10000 --delete age`         |
 | **`edit`**        | Updates the name/phone/email of an existing person<br>`INDEX [--name NAME] [--phone PHONE] [--email EMAIL]`<br> e.g., `edit 1 --name Jane Doe --phone 91234567 --email newemail@example.com` |
-| **`filter`**      | Filters the master list<br>`[--name NAME]... [--phone PHONE]`<br> e.g., `filter --name John --phone 98765432`                                                                                |
+| **`delete`**      | Deletes an existing person<br>`INDEX`<br> e.g., `delete 5`                                                                                                                                   |
+| **`tag`**         | Updates tags of an existing person<br>`INDEX [--add NAME:VALUE]... [--edit NAME:VALUE]... [--delete TAGNAME]...`<br> e.g., `tag 1 --add school:NUS --edit salary:10000 --delete age`         |
+| **`filter`**      | Filters the master list<br>`[--name NAME]... [--phone PHONE]... [--email EMAIL]... [--status STATUS]... [--tag TAGNAME[:TAGVALUE]]...`<br> e.g., `filter --name John --phone 98765432`       |
 | **`sort`**        | Sorts the currently displayed list<br>`[FIELD] [--asc\|--desc] [--number\|--alpha]`<br> e.g., `sort phone --desc --number`                                                                   |
 | **`clearstatus`** | Clears the status of an existing person<br>`INDEX`<br> e.g., `clearstatus 1`                                                                                                                 |
 | **`target`**      | Marks an existing person as a target<br>`INDEX`<br> e.g., `target 2`                                                                                                                         |
 | **`scam`**        | Marks an existing person as a scammer<br>`INDEX`<br> e.g., `scam 3`                                                                                                                          |
 | **`ignore`**      | Marks an existing person as ignored<br>`INDEX`<br> e.g., `ignore 4`                                                                                                                          |
-| **`delete`**      | Deletes an existing person<br>`INDEX`<br> e.g., `delete 5`                                                                                                                                   |
 | **`list`**        | Lists all contacts                                                                                                                                                                           |
 | **`clear`**       | Deletes all contacts                                                                                                                                                                         |
 | **`nuke`**        | Deletes this app and all locally stored data                                                                                                                                                 |
