@@ -25,6 +25,8 @@ public class HelpWindow extends UiPart<Stage> {
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
+    private static final double DEFAULT_WIDTH = 960;
+    private static final double DEFAULT_HEIGHT = 670;
 
     @FXML
     private Button copyButton;
@@ -44,6 +46,8 @@ public class HelpWindow extends UiPart<Stage> {
         super(FXML, root);
         helpMessage.setText(HELP_MESSAGE);
         helpText.setText(HELP_TEXT);
+        root.setWidth(DEFAULT_WIDTH);
+        root.setHeight(DEFAULT_HEIGHT);
     }
 
     /**
