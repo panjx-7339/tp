@@ -278,7 +278,7 @@ The filter command affects the indices of the contacts. When using commands that
 </box>
 
 <box type="tip" seamless>
-The <code>edit</code> command will only display a subset of filtered persons in ScamBook. If after running another command (e.g. <code>edit</code>)
+When after running another command (e.g. <code>edit</code>),
 if the modified person(s) still fulfill the most recent filter applied, the displayed list will remain as the filtered list. Otherwise, the displayed list will revert to show all persons.
 </box>
 
