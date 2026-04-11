@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.logging.Logger;
+import java.util.stream.IntStream;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -50,14 +51,20 @@ public class PersonListPanel extends UiPart<Region> {
                 personListView.getSelectionModel().clearSelection();
                 return;
             }
-            int index = personListView.getItems().indexOf(person);
+
+            // Use reference equality (==) instead of indexOf (which uses .equals())
+            int index = IntStream.range(0, personListView.getItems().size())
+                    .filter(i -> personListView.getItems().get(i) == person)
+                    .findFirst().orElse(-1);
+
+            logger.info("Selected index: " + index);
             if (index < 0) {
                 return;
             }
             personListView.getSelectionModel().select(index);
 
             // Small delay to allow JavaFX layout pass to complete before scrolling
-            PauseTransition pause = new PauseTransition(Duration.millis(70));
+            PauseTransition pause = new PauseTransition(Duration.millis(100));
             pause.setOnFinished(event -> personListView.scrollTo(index));
             pause.play();
         });

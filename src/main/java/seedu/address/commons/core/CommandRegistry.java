@@ -40,7 +40,7 @@ public class CommandRegistry {
 
     static {
         register(AddCommand.COMMAND_WORD,
-                "NAME [--phone PHONE] [--email EMAIL] [--tag NAME:VALUE]...",
+                "NAME [--phone PHONE] [--email EMAIL] [--tag TAGNAME:TAGVALUE]...",
                 AddCommand.EXAMPLE);
 
         register(EditCommand.COMMAND_WORD,
@@ -55,7 +55,7 @@ public class CommandRegistry {
 
         register(FilterCommand.COMMAND_WORD,
                 "[--name NAME]... [--phone PHONE]... [--email EMAIL]... [--status STATUS]..."
-                        + "[--tag NAME[:VALUE]]...",
+                        + "[--tag TAGNAME[:TAGVALUE]]...",
                 FilterCommand.EXAMPLE);
 
         register(SortCommand.COMMAND_WORD,
